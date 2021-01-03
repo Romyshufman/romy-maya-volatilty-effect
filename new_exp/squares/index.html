@@ -456,7 +456,7 @@
                 $.ajax({
                     type: 'POST',
                     url: '/save',
-                    data: { 'data': processed_data },
+                    data: { 'data': processed_data, 'prolific': localStorage.prolific },
                     success: function () {
                         console.log('success');
                         document.location = '/next'
