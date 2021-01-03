@@ -777,21 +777,34 @@
             preload_images: change_detection_images, practice_deck_images, test_deck_images, reward_images, example_images,
             show_preload_progress_bar: true,
             on_finish: function () {
-                processed_data = jsPsych.data.get().json()
-
+                /*calculate accuracy in squares part of cards game */
+                var correct_test_squares = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'test_cards' }).select('is_correct').sum()
+                var total_test_squares = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'test_cards' }).select('is_correct').count()
+                var test_squares_cards_accuracy = correct_test_squares / total_test_squares;
+                var squares_accuracy = localStorage.squares_accuracy; //accuracy from only_squares part
+                var average_accuracy = squares_accuracy / 2;
+                localStorage.accuracy = average_accuracy; //accuracy to show
+                /*calculate bonus */
+                var number_of_reward1 = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'reward1' }).select('reward').sum()
+                var number_of_reward2 = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'reward2' }).select('reward').sum()
+                var bonus = 0.006 * (number_of_reward1 + number_of_reward2)
+                var bonus_string = bonus.toFixed(2)
+                localStorage.bonus = bonus_string; //bonus to show
+                /*get data */
+                processed_data = jsPsych.data.get().filter([{ phase: 'exp', trial_name: 'reward1' }, { phase: 'exp', trial_name: 'reward2' }, { phase: 'exp', trial_name: 'test_cards' }]).json()
                 $.ajax({
-                        type: 'POST',
-                        url: '/save',
-                        data: {'data': processed_data},
-                        success: function() {
-                            console.log('success');
-                            document.location = '/next'
-                         },
-                         // Endpoint not running, local save
-                         error: function(err) {
-                            console.log(err)
-                          }
-                 });
+                    type: 'POST',
+                    url: '/save',
+                    data: { 'data': processed_data },
+                    success: function () {
+                        console.log('success');
+                        document.location = '/next'
+                    },
+                    // Endpoint not running, local save
+                    error: function (err) {
+                        console.log(err)
+                    }
+                });
             }
         });
 

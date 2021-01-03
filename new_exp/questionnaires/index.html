@@ -49,21 +49,21 @@
         jsPsych.init({
             timeline: timeline,
             on_finish: function () {
-                processed_data = jsPsych.data.get().json()
+                processed_data = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'question' }).json()
 
                 $.ajax({
-                        type: 'POST',
-                        url: '/save',
-                        data: {'data': processed_data},
-                        success: function() {
-                            console.log('success');
-                            document.location = '/next'
-                         },
-                         // Endpoint not running, local save
-                         error: function(err) {
-                            console.log(err)
-                          }
-                 });
+                    type: 'POST',
+                    url: '/save',
+                    data: { 'data': processed_data },
+                    success: function () {
+                        console.log('success');
+                        document.location = '/next'
+                    },
+                    // Endpoint not running, local save
+                    error: function (err) {
+                        console.log(err)
+                    }
+                });
             }
         });
 
