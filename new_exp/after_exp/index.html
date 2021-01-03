@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Conclusion</title>
+    <script src="js/jspsych.js"></script>
+    <script src="plugins/jspsych-resize.js"></script>
+    <script src="plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="plugins/jspsych-instructions.js"></script>
+    <script src="plugins/jspsych-survey-text.js"></script>
+    <script src="plugins/jspsych-survey-multi-choice.js"></script>
+    <script src="plugins/jspsych-fullscreen.js"></script>
+    <script src="plugins/jspsych-html-button-response.js"></script>
+    <script src="plugins/jspsych-html-slider-response.js"></script>
+    <link href="css/my_exp.css" rel="stylesheet" type="text/css">
+    <link href="css/jspsych.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+    <script>
+        /*---------------------------------------------------- 
+        After experiment
+        ------------------------------------------------------*/
+        var timeline = [];
+        var conclusion = {
+            type: 'html-keyboard-response',
+            stimulus: function () {
+                var feedback_string = '<div style="font-size:20px;">This task is over. Thank you for your participation in this task.<br>';
+                var correct_test_square = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'test_cards' }).select('is_correct').sum()
+                var total_test_square = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'test_cards' }).select('is_correct').count()
+                var test_square_accuracy = correct_test_square / total_test_square;
+                var accuracy_string = (test_square_accuracy * 100).toFixed(2) + '%'
+                feedback_string += 'Your accuracy was: ' + accuracy_string
+                var number_of_reward1 = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'reward1' }).select('reward').sum()
+                var number_of_reward2 = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'reward2' }).select('reward').sum()
+                var bonus = 0.006 * (number_of_reward1 + number_of_reward2)
+                var bonus_string = bonus.toFixed(2)
+                feedback_string += '<br> Your bonus is: ' + bonus_string + 'Pounds </div>'
+
+                return feedback_string
+            }
+        }
+        timeline.push(conclusion)
+
+        timeline.push({
+            type: 'fullscreen',
+            fullscreen_mode: false
+        });
+
+        /*---------------------------------------------------- 
+              Define init for the whole experiment
+              ------------------------------------------------------*/
+        jsPsych.init({
+            timeline: timeline,
+            on_finish: function () {
+                jsPsych.data.displayData();
+                raw_data = jsPsych.data.get().csv() //raw_data
+                download_csv(raw_data)
+            },
+            on_close: function () {
+                data = jsPsych.data.get().csv();
+                download_csv(data)
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>
