@@ -3,6 +3,7 @@
 
 <head>
     <title>Questions</title>
+    <script src="js/jquery-2.1.1.min.js"></script>
     <script src="js/jspsych.js"></script>
     <script src="plugins/jspsych-resize.js"></script>
     <script src="plugins/jspsych-html-keyboard-response.js"></script>
@@ -27,7 +28,7 @@
             type: 'html-slider-response',
             stimulus: '<p>How much did you believe in our instructions?</p>',
             labels: ['Did not believe at all ', 'Very much believed'],
-            data: { trial_name: question }
+            data: { trial_name: 'question' }
         };
         timeline.push(question)
         /*This function downloads the data */
@@ -48,15 +49,21 @@
         jsPsych.init({
             timeline: timeline,
             on_finish: function () {
-                jsPsych.data.displayData();
-                raw_data = jsPsych.data.get().csv() //raw_data
-                processed_data = jsPsych.data.get().filter({ trial_name: 'question' }).csv()
-                download_csv(raw_data)
-                download_csv(processed_data)
-            },
-            on_close: function () {
-                data = jsPsych.data.get().csv();
-                download_csv(data)
+                processed_data = jsPsych.data.get().json()
+
+                $.ajax({
+                        type: 'POST',
+                        url: '/save',
+                        data: {'data': processed_data},
+                        success: function() {
+                            console.log('success');
+                            document.location = '/next'
+                         },
+                         // Endpoint not running, local save
+                         error: function(err) {
+                            console.log(err)
+                          }
+                 });
             }
         });
 

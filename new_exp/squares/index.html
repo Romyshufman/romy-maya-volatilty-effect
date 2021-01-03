@@ -3,6 +3,7 @@
 
 <head>
     <title>Squares</title>
+    <script src="js/jquery-2.1.1.min.js"></script>
     <script src="js/jspsych.js"></script>
     <script src="plugins/jspsych-resize.js"></script>
     <script src="plugins/jspsych-html-keyboard-response.js"></script>
@@ -445,15 +446,21 @@
             preload_images: change_detection_images,
             show_preload_progress_bar: true,
             on_finish: function () {
-                jsPsych.data.displayData();
-                raw_data = jsPsych.data.get().csv() //raw_data
-                processed_data = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'test' }).csv()
-                download_csv(raw_data)
-                download_csv(processed_data)
-            },
-            on_close: function () {
-                data = jsPsych.data.get().csv();
-                download_csv(data)
+                processed_data = jsPsych.data.get().json()
+
+                $.ajax({
+                        type: 'POST',
+                        url: '/save',
+                        data: {'data': processed_data},
+                        success: function() {
+                            console.log('success');
+                            document.location = '/next'
+                         },
+                         // Endpoint not running, local save
+                         error: function(err) {
+                            console.log(err)
+                          }
+                 });
             }
         });
 
