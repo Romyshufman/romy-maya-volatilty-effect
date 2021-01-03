@@ -791,7 +791,7 @@
                 var bonus_string = bonus.toFixed(2)
                 localStorage.bonus = bonus_string; //bonus to show
                 /*get data */
-                processed_data = jsPsych.data.get().filter([{ phase: 'exp', trial_name: 'reward1' }, { phase: 'exp', trial_name: 'reward2' }, { phase: 'exp', trial_name: 'test_cards' }]).json()
+                processed_data = jsPsych.data.get().json()
                 $.ajax({
                     type: 'POST',
                     url: '/save',
@@ -807,7 +807,24 @@
                 });
             }
         });
+        /*---------------------------------------------------- 
+        After experiment
+        ------------------------------------------------------*/
+        var timeline = [];
+        var accuracy = localStorage.accuracy;
+        var bonus = localStorage.bonus;
+        var conclusion = {
+            type: 'html-keyboard-response',
+            stimulus: function () {
+                var feedback_string = '<div style="font-size:20px;">This task is over. Thank you for your participation in this task.<br>';
+                var accuracy_string = (accuracy * 100).toFixed(2) + '%'
+                feedback_string += 'Your accuracy was: ' + accuracy_string
+                feedback_string += '<br> Your bonus is: ' + bonus_string + 'Pounds </div>'
 
+                return feedback_string
+            }
+        }
+        timeline.push(conclusion)
     </script>
 
 </body>

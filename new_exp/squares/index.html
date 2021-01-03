@@ -452,7 +452,7 @@
                 var test_squares_accuracy = correct_test_squares / total_test_squares;
                 localStorage.squares_accuracy = test_squares_accuracy;
                 /*get data */
-                processed_data = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'test_squares' }).json()
+                processed_data = jsPsych.data.get().json()
                 $.ajax({
                     type: 'POST',
                     url: '/save',
