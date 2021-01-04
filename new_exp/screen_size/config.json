@@ -1,7 +1,7 @@
 {
-    "name": "questionnaires",
+    "name": "screen_size",
     "template":"survey",
-    "exp_id": "questionnaires",  
+    "exp_id": "screen_size",  
     "url": "",
     "cognitive_atlas_task_id": "0",
     "contributors": [
