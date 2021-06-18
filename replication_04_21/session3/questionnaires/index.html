@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Questions</title>
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/jspsych.js"></script>
+    <script src="plugins/jspsych-resize.js"></script>
+    <script src="plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="plugins/jspsych-instructions.js"></script>
+    <script src="plugins/jspsych-survey-text.js"></script>
+    <script src="plugins/jspsych-survey-multi-choice.js"></script>
+    <script src="plugins/jspsych-fullscreen.js"></script>
+    <script src="plugins/jspsych-html-button-response.js"></script>
+    <script src="plugins/jspsych-html-slider-response.js"></script>
+    <link href="css/my_exp.css" rel="stylesheet" type="text/css">
+    <link href="css/jspsych.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+    <script>
+        /*---------------------------------------------------- 
+        Questionnaires
+        ------------------------------------------------------*/
+        var timeline = [];
+        var options_oc = ["0 - Not at all", "1 - A little", "2 - Moderately", "3 - A lot", "4 - Extremely"];
+        var oc_questions = {
+            type: 'survey-multi-choice',
+            questions: [
+                { prompt: "<b>I have saved up so many things that they get in the way.</b>", name: '1', options: options_oc, required: true },
+                { prompt: "<b>I check things more often than necessary.</b>", name: '2', options: options_oc, required: true },
+                { prompt: "<b>I get upset if objects are not arranged properly.</b>", name: '3', options: options_oc, required: true },
+                { prompt: "<b>I feel compelled to count while I am doing things.</b>", name: '4', options: options_oc, required: true },
+                { prompt: "<b>I find it difficult to touch an object when I know it has been touched by strangers or certain people.</b>", name: '5', options: options_oc, required: true },
+                { prompt: "<b>I find it difficult to control my own thoughts. </b>", name: '6', options: options_oc, required: true },
+                { prompt: "<b>I collect things I don’t need.</b>", name: '7', options: options_oc, required: true },
+                { prompt: "<b>I repeatedly check doors, windows, drawers, etc.</b>", name: '8', options: options_oc, required: true },
+                { prompt: "<b>I get upset if others change the way I have arranged things.</b>", name: '9', options: options_oc, required: true },
+                { prompt: "<b>I feel I have to repeat certain numbers.</b>", name: '10', options: options_oc, required: true },
+                { prompt: "<b>I sometimes have to wash or clean myself simply because I feel  contaminated.</b>", name: '11', options: options_oc, required: true },
+                { prompt: "<b>I am upset by unpleasant thoughts that come into my mind against my will.</b>", name: '12', options: options_oc, required: true },
+                { prompt: "<b>I avoid throwing things away because I am afraid I might need them later.</b>", name: '13', options: options_oc, required: true },
+                { prompt: "<b>I repeatedly check gas and water taps and light switches after turning them  off.</b>", name: '14', options: options_oc, required: true },
+                { prompt: "<b>I need things to be arranged in a particular way.</b>", name: '15', options: options_oc, required: true },
+                { prompt: "<b>I feel that there are good and bad numbers.</b>", name: '16', options: options_oc, required: true },
+                { prompt: "<b>I wash my hands more often and longer than necessary.</b>", name: '17', options: options_oc, required: true },
+                { prompt: "<b>I frequently get nasty thoughts and have difficulty in getting rid of them.</b>", name: '18', options: options_oc, required: true },
+            ],
+        };
+        timeline.push(oc_questions)
+        /*This function downloads the data */
+        var subN = localStorage.subN
+        var IDsub = Date.now();
+        function download_csv(csv) {
+            var hiddenElement = document.createElement('a');
+            file_name = "WM_visual_array_" + subN + "_" + IDsub.toString() + ".csv"
+            hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+            hiddenElement.target = '_blank';
+            hiddenElement.download = file_name;
+            hiddenElement.click();
+        }
+
+        /*---------------------------------------------------- 
+              Define init for the whole experiment
+              ------------------------------------------------------*/
+        jsPsych.init({
+            timeline: timeline,
+            on_finish: function () {
+                processed_data = jsPsych.data.get().json()
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/save',
+                    data: { 'data': processed_data },
+                    success: function () {
+                        console.log('success');
+                        document.location = '/next'
+                    },
+                    // Endpoint not running, local save
+                    error: function (err) {
+                        console.log(err)
+                    }
+                });
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>
