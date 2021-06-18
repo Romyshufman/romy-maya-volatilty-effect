@@ -815,6 +815,7 @@
             preload_images: change_detection_images, practice_deck_images, test_deck_images, reward_images, example_images,
             show_preload_progress_bar: true,
             on_finish: function () {
+                // This all part is not used in this experiment (showing participants their bonus and capacity)
                 /*calculate accuracy in squares part of cards game */
                 var correct_test_squares = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'test_cards' }).select('is_correct').sum()
                 var total_test_squares = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'test_cards' }).select('is_correct').count()
@@ -847,17 +848,21 @@
         /*---------------------------------------------------- 
         After experiment
         ------------------------------------------------------*/
+        /* we don't use it here. have after_exp
         var timeline = [];
         var accuracy = localStorage.accuracy;
         var bonus = localStorage.bonus;
+        
         var conclusion = {
             type: 'html-keyboard-response',
             stimulus: function () {
-                var feedback_string = '<div style="font-size:20px;">This task is over. Thank you for your participation and see you tomorrow.<br>';
+                var feedback_string = '<div style="font-size:20px;">This session is over. Thank you for your participation and see you tomorrow.<br>';
                 return feedback_string
             }
         }
         timeline.push(conclusion)
+        */
+        
     </script>
 
 </body>
