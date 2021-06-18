@@ -5,7 +5,7 @@ You will find here a JavaScript implementation of the paradigm containing a dual
 
 You will also find here a simple simulation and a replication of a conceptually similar paradigm.
 
-Under experiment_01_21 folder you will find the JavaScript implementation of the paradigm for an online experiment using jspsych.
+Under <b>experiment_01_21 folder</b> you will find the JavaScript implementation of the paradigm for an online experiment using jspsych.
 
 The 01/21 experiment is described here: https://osf.io/kchq4
 
