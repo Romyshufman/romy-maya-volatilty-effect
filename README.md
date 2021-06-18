@@ -1,7 +1,7 @@
 # 0004_Ido_Set-size_effects
 This experiment is aimed at studying <b>the effect of WM load manipulation on outcome-irrelevant value assignment</b>.
 
-You will find here a JavaScript implementation of the paradigm containing a dual task of 2-armed bandit and a change detection task.
+You will find here a JavaScript implementation of the paradigm containing a <b> dual task of a  2-armed bandit and a change detection task</b>.
 
 You will also find here a simple simulation and a replication of a conceptually similar paradigm.
 
