@@ -21,7 +21,7 @@ form p.likert:before {
         }
 
         p.likert {
-            color: white;
+            color: black;
             clear: both;
             border-radius: 5px;
             background-color: gray;
@@ -38,19 +38,19 @@ form p.likert:before {
      }
 
 .experiment-container, .experiment-content, .experiment-main, .experiment-ribbon {
-    background-color: black !important;
+    background-color: white !important;
 }
 
 .mdl-radio__outer-circle {
     border-color: gray !important;
-    background-color: black;
+    background-color: white;
 }
 .mdl-radio__inner-circle {
     background: gray;
 }
 
 #questions {
-    color: white;
+    color: black;
 }
 .experiment-content {
     padding-top: 0;
@@ -76,7 +76,9 @@ button:disabled {
     width: 100%;
 }
 
-
+.mdl-shadow--4dp {
+    box-shadow: none;
+}
 
 
 
