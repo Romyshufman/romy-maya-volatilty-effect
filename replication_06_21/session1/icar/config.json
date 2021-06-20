@@ -1,7 +1,7 @@
 {
-  "name": "ICAR",
+  "name": "icar",
   "template": "survey",
-  "exp_id": "ICAR",
+  "exp_id": "icar",
   "url": "",
   "cognitive_atlas_task_id": "0",
   "contributors": [
