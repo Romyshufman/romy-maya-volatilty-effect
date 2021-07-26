@@ -15,6 +15,21 @@
     <script src="plugins/jspsych-html-slider-response.js"></script>
     <link href="css/my_exp.css" rel="stylesheet" type="text/css">
     <link href="css/jspsych.css" rel="stylesheet" type="text/css">
+    <!-- debugging via sentry.com -->
+    <script
+  src="https://browser.sentry-cdn.com/6.7.2/bundle.tracing.min.js"
+  integrity="sha384-wOrLFfswE3wmvwEzqgo2kc7ksrFcx4ephHugBnWW3jY8ktO8xSi5Lny58pZSpovY"
+  crossorigin="anonymous"
+></script>
+<script>
+Sentry.init({
+  dsn: "https://e930abb231a542d7b9b087bbdd7736ab@o879085.ingest.sentry.io/5831471",
+  integrations: [new Sentry.Integrations.BrowserTracing()],
+  // We recommend adjusting this value in production, or using tracesSampler
+  // for finer control
+  tracesSampleRate: 1.0,
+});
+    </script>
 </head>
 
 <body>
@@ -73,11 +88,11 @@
         /*randomly assigning the mapping of the response-keys to be ks or sk */
         if (localStorage.prolific != undefined) { //are we debugging?
             var sign = localStorage.prolific[localStorage.prolific.length - 1];
-            if (sign in ['0', '1', '2', '3', '4', 'a', 'b', 'c']) {
-                mapping = 'sk'
+            if (['0', '1', '2', '3', '4', 'a', 'b', 'c'].includes(sign)) {
+               var mapping = 'sk'
             }
             else {
-                mapping = 'ks'
+               var mapping = 'ks'
             }
         }
         else {
@@ -439,6 +454,11 @@
                 current_squares_exp_trial += 1;
             }
         }
+        /*Finish exp part of squares game*/
+        var finish_exp_squares = {
+            type: 'html-keyboard-response',
+            stimulus: '<p>Good Job! <br> You have finished the squares game.<br> We will now move on to the next test. Good luck! <br> <br> <b> Press any key to continue</p>'
+        };
 
         var test_procedure_squares = {
             timeline: [fixation_memory, memory, fixation_retention, test, feedback_squares],
@@ -446,7 +466,7 @@
         }
 
         var full_procedure_squares = {
-            timeline: [instructions_squares_loop, practice_squares_loop, start_exp_squares, test_procedure_squares]
+            timeline: [instructions_squares_loop, practice_squares_loop, start_exp_squares, test_procedure_squares,finish_exp_squares]
         } //instructions takes 60sec total
         timeline.push(full_procedure_squares)
 
