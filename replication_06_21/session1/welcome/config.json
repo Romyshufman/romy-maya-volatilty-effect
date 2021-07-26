@@ -1,11 +1,7 @@
 {
   "name": "welcome",
   "template": "survey",
-<<<<<<< HEAD
-  "exp_id": "welcome111",
-=======
   "exp_id": "welcome",
->>>>>>> 9e8faf3c259abb3bbdb31134dd79ce0f791a0b5a
   "url": "",
   "cognitive_atlas_task_id": "0",
   "contributors": [
