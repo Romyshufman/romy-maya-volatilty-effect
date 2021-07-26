@@ -16,3 +16,5 @@ The 06/21 experiment is described here: https://osf.io/6cz29
 The <b> WM_RL_2017 </b> folder contains a replication of a basic TD(0) model.
 
 The replication (pdf in folder) is based on: https://pubmed.ncbi.nlm.nih.gov/28651789/
+
+Finally, you can also use the data editing file which helps you organize the raw data you get from the server.
