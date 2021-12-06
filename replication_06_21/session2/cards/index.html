@@ -85,7 +85,11 @@ Sentry.init({
         /*---------------------------------------------------- 
         Card game starts
         ------------------------------------------------------*/
-
+        /*full screen */
+        var enter_fullscreen = {
+            type: "fullscreen",
+            fullscreen_mode: true
+        }
         /*---------------------------------------------------- 
         Define images
         ------------------------------------------------------*/
@@ -347,6 +351,7 @@ Sentry.init({
         Start practice
         ------------------------------------------------------*/
         var timeline = [];
+        timeline.push(enter_fullscreen)
         var start_practice_only_cards = {
             type: 'html-keyboard-response',
             stimulus: '<div>We will now do a few practice trials which will contain only the cards part without the squares. <br> Please be ready with your fingers on <b>"s"</b> and <b>"k".</b> <br><br> <b> Press any key to begin</b></div>',
@@ -791,12 +796,12 @@ Sentry.init({
         ------------------------------------------------------*/
         var demo_procedure_only_cards = {
             timeline: [fixation_cards, practice_cards1, practice_choice1, practice_reward1, fixation_cards, practice_cards2, practice_choice2, practice_reward2],
-            repetitions: 6 //every trial takes 500+200+2*(900+1500+500+750)+1500+500 =10 sec per trial, 6 trials = 60 sec
+            repetitions: 1 //every trial takes 500+200+2*(900+1500+500+750)+1500+500 =10 sec per trial, 6 trials = 60 sec
         }
 
         var demo_procedure_cards = {
             timeline: [fixation_memory, memory_for_cards_prac, fixation_cards, practice_cards1, practice_choice1, practice_reward1, fixation_cards, practice_cards2, practice_choice2, practice_reward2, test_for_cards_prac, feedback_squares],
-            repetitions: 6 //every trial takes 500+200+2*(900+1500+500+750)+1500+500 =10 sec per trial, 6 trials = 60 sec
+            repetitions: 3 //every trial takes 500+200+2*(900+1500+500+750)+1500+500 =10 sec per trial, 6 trials = 60 sec
         }
         var instructions_loop = {
             timeline: [instructions_cards, start_practice_only_cards, demo_procedure_only_cards, instructions_combined, start_practice_cards, demo_procedure_cards, start_instructions_test, instructions_test, check_answers],
