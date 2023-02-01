@@ -491,7 +491,7 @@ Sentry.init({
         var test_for_cards_prac = {
             type: "html-keyboard-response",
             stimulus: function () {
-                rand_num = getRandomInt(number_of_images - 1)
+                rand_num = getRandomInt(number_of_images)
                 if (condition_cards[1] == 's') { /* it is the same condition */
                     square = current_locations[rand_num] + change_detection_images[rand_num] + ">"
                 }
@@ -723,7 +723,7 @@ Sentry.init({
         var test_for_cards = {
             type: "html-keyboard-response",
             stimulus: function () {
-                rand_num = getRandomInt(number_of_images - 1)
+                rand_num = getRandomInt(number_of_images)
                 if (condition_cards[1] == 's') { /* it is the same condition */
                     square = current_locations[rand_num] + change_detection_images[rand_num] + ">"
                 }
