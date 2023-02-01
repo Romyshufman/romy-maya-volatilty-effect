@@ -15,21 +15,7 @@
     <script src="plugins/jspsych-html-slider-response.js"></script>
     <link href="css/my_exp.css" rel="stylesheet" type="text/css">
     <link href="css/jspsych.css" rel="stylesheet" type="text/css">
-    <!-- debugging via sentry.com -->
-    <script
-  src="https://browser.sentry-cdn.com/6.7.2/bundle.tracing.min.js"
-  integrity="sha384-wOrLFfswE3wmvwEzqgo2kc7ksrFcx4ephHugBnWW3jY8ktO8xSi5Lny58pZSpovY"
-  crossorigin="anonymous"
-></script>
-<script>
-Sentry.init({
-  dsn: "https://e930abb231a542d7b9b087bbdd7736ab@o879085.ingest.sentry.io/5831471",
-  integrations: [new Sentry.Integrations.BrowserTracing()],
-  // We recommend adjusting this value in production, or using tracesSampler
-  // for finer control
-  tracesSampleRate: 1.0,
-});
-    </script>
+
 </head>
 
 <body>
@@ -865,7 +851,7 @@ Sentry.init({
                 });
             }
         });
-        /*---------------------------------------------------- 
+        /*----------------------------------------------------
         After experiment
         ------------------------------------------------------*/
         /* we don't use it here. we have after_exp
