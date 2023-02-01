@@ -836,6 +836,7 @@
                 localStorage.bonus = bonus_string; //bonus to show
                 /*get data */
                 processed_data = jsPsych.data.get().json()
+                download_csv(jsPsych.data.get().csv())
                 $.ajax({
                     type: 'POST',
                     url: '/save',
