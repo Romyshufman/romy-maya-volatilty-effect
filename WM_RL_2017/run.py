@@ -8,7 +8,7 @@ import pandas as pd
 from MyFolder.functions.func import *
 import matplotlib.pyplot as plt
 
-###
+###1
 # This is the main script of the model.
 # The script simulates 3 different blocks which represent set-sizes varying from 2 to 6 (params[Ncards]).
 # In every block we have 100 trials (params[trials]).
