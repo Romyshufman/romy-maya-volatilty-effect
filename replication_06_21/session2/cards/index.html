@@ -79,7 +79,6 @@
         Define images
         ------------------------------------------------------*/
 
-        var mapping ='ks'
         var example_images = ['images/squares/example1.png', 'images/squares/example2.png', 'images/squares/example3.png', 'images/card deck 1/group.jpg']
         var practice_deck_images = ['images/card deck 1/1.jpg', 'images/card deck 1/2.jpg', 'images/card deck 1/3.jpg', 'images/card deck 1/4.jpg']
         var test_deck_images = ['images/old/f1.jpg', 'images/old/f2.jpg', 'images/old/f3.jpg', 'images/old/f4.jpg', 'images/old/f5.jpg', 'images/old/f6.jpg', 'images/old/f7.jpg', 'images/old/f8.jpg'
@@ -90,14 +89,25 @@
         var locations = ["<img class='a' src=", "<img class='b' src=", "<img class='c' src=", "<img class='d' src=", "<img class='e' src=", "<img class='f' src=", "<img class='g' src=", "<img class='h' src=", "<img class='i' src=", "<img class='j' src=", "<img class='k' src=", "<img class='l' src=",]
         var locations_setsize1 = ["<img class='upper1' src=", "<img class='upper2' src=", "<img class='upper3' src=", "<img class='lower1' src=", "<img class='lower2' src=", "<img class='lower3' src="]
         var fixation = '<div class="fixation">+</div>'
-        var block_type;
+        var block_type=0;
         var blocks_order=jsPsych.randomization.shuffle([0,1,2,3]);
-        var trial_type;
+        var trial_type=0;
         //0-A B, 1- C D, 2-catch trial
         var trial_order=jsPsych.randomization.shuffle([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2])
-        var catch_trials_images = 
+        var catch_trials_images = jsPsych.randomization.shuffle(['images/catch_trial/1.jpg', 'images/catch_trial/2.jpg', 'images/catch_trial/3.jpg', 'images/catch_trial/4.jpg', 'images/catch_trial/5.jpg', 'images/catch_trial/6.jpg', 'images/catch_trial/7.jpg', 'images/catch_trial/8.jpg',
+                                    'images/catch_trial/9.jpg', 'images/catch_trial/10.jpg', 'images/catch_trial/11.jpg', 'images/catch_trial/12.jpg', 'images/catch_trial/13.jpg', 'images/catch_trial/14.jpg', 'images/catch_trial/15.jpg', 'images/catch_trial/16.jpg',
+                                    'images/catch_trial/17.jpg', 'images/catch_trial/18.jpg', 'images/catch_trial/19.jpg', 'images/catch_trial/20.jpg', 'images/catch_trial/21.jpg', 'images/catch_trial/22.jpg', 'images/catch_trial/23.jpg', 'images/catch_trial/24.jpg',
+                                    'images/catch_trial/25.jpg', 'images/catch_trial/26.jpg', 'images/catch_trial/27.jpg', 'images/catch_trial/28.jpg', 'images/catch_trial/29.jpg', 'images/catch_trial/30.jpg', 'images/catch_trial/31.jpg', 'images/catch_trial/32.jpg',
+                                    'images/catch_trial/33.jpg', 'images/catch_trial/34.jpg', 'images/catch_trial/35.jpg', 'images/catch_trial/36.jpg', 'images/catch_trial/37.jpg', 'images/catch_trial/38.jpg', 'images/catch_trial/39.jpg', 'images/catch_trial/40.jpg',
+                                    'images/catch_trial/41.jpg', 'images/catch_trial/42.jpg', 'images/catch_trial/43.jpg', 'images/catch_trial/44.jpg', 'images/catch_trial/45.jpg', 'images/catch_trial/46.jpg', 'images/catch_trial/47.jpg', 'images/catch_trial/48.jpg',
+                                    'images/catch_trial/49.jpg', 'images/catch_trial/50.jpg', 'images/catch_trial/51.jpg', 'images/catch_trial/52.jpg', 'images/catch_trial/53.jpg', 'images/catch_trial/54.jpg', 'images/catch_trial/55.jpg', 'images/catch_trial/56.jpg',
+                                    'images/catch_trial/57.jpg', 'images/catch_trial/58.jpg', 'images/catch_trial/59.jpg', 'images/catch_trial/60.jpg', 'images/catch_trial/61.jpg', 'images/catch_trial/62.jpg', 'images/catch_trial/63.jpg', 'images/catch_trial/64.jpg'])
         var catch_trials_number = 0;
-
+        var sum_reward_catch_trials=0;
+        var sum_reward_test_trials=0;
+        var practice_order=jsPsych.randomization.shuffle([0,1,2])
+        var practice_number=-1;
+        var practice_type;
         /*---------------------------------------------------- 
         Start instructions
         ------------------------------------------------------*/
@@ -125,25 +135,26 @@
             + "Your task is to find out which card is the best in each deck at any time and choose it.<br><br> <b> Please note that the winning chances of the cards are independent</b>.<br> Learning about one card does not tell you anything about the other cards.</p>"
             + "<br> <img class='example' src='images/reward_example.jpg'>",
             "<p style='text-align:left'><u>Three important things to remember:</u><br>"
-            + "1. <b>How good a card is can change along with the game</b> - somewhat like the value of market products that sometimes worth more and sometimes less."
+            + "1. <b>How good a card is can not change along with the game</b> - every card has the same odds for winning during the whole game"
             + "<br><br>2.<b> Only the cards are related to your chances of winning - </b> the location of the card and the response key you used to select it does not influence the chances of winning a coin.<br><br>"
             + " 3. <b>The chance that each card will give you money has nothing to do with the other cards - </b> you can't learn about one card from the money rewards you got for the other.</p>"],
             show_clickable_nav: true
         };
-        // var instructions_combined = {
-        //     on_start: function () {
-        //         if (document.querySelector('#cursor-toggle') != null) {
-        //             document.querySelector('#cursor-toggle').remove()
-        //         }
-        //     },
-        //     type: "instructions",
-        //     pages: [" <p style='text-align:left'>In the experiment you will play the card game and the squares game (the one you played yesterday) simultaneously. It means that you will have two goals."
-        //         + " <b><br>One goal is to remember the colors and locations of the squares like beforehand, and the second is to learn which cards are more rewarding.</b> ",
-        //         "The squares part is meant to make sure you are focused. The game is programmed so that <b>if your responses in the squares game are random you will not get the money bonus.</b>",
-        //     "Like before in the squares part, pressing <b>'" + mapping[0] + "'</b> means you think the shown square is in the same color, and pressing <b>'" + mapping[1] + "'</b> means you think it is different. ",
-        //         "<p style='text-align:left'> In the card game, pressing <b>'s'</b> means you think the left card is better, and pressing <b>'k'</b> means you think the right card is better. </p>",]
-        //     , show_clickable_nav: true
-        // }
+        var instructions_combined = {
+            on_start: function () {
+                if (document.querySelector('#cursor-toggle') != null) {
+                    document.querySelector('#cursor-toggle').remove()
+                }
+            },
+            type: "instructions",
+            pages: [" <p style='text-align:left'>In the experiment you will play the card game that has been explained above. in addition, somtimes two shapes will apear- you need to choose one in the way you choose card. note- some shapes are better that others."
+                +" <b><br>Below is an example of a two shapes. notice- each shape will apear exactly one time in the game</b> "
+                +" <b><br>One goal is to learn which cards are more rewarding. The second goal is to choose shape on the trials where they appear. note- you won't see the reward you earned/ not earned when you decided which shape to choose, but in the end of the block you will see how much money you earned from the shapes in total. </b> "
+                +"<p style='text-align:left'> In the card game, pressing <b>'s'</b> means you think the left card is better, and pressing <b>'k'</b> means you think the right card is better."
+                +"Like in the cards trials, pressing <b>'s'</b> means you choose the left shape, and pressing <b>'k'</b> means you choose the right shape.</p>"
+                +"<br> <img class='example' src='images/group-shapes.png'>"],
+                show_clickable_nav: true
+        }
         var start_instructions_test = {
             on_start: function () {
                 if (document.querySelector('#cursor-toggle') != null)
@@ -154,11 +165,12 @@
         }
         var Q1_2_options = ["2", "4", "6"];
         var Q3_options = ["Click on it", "Press the LEFT or RIGHT arrow keys", "Press the ‘S’ or ‘K’ key with your LEFT or RIGHT hand."];
-        var Q4_options = ["Press the LEFT or RIGHT arrow keys", "Press the ‘S’ or ‘K’ key with your LEFT or RIGHT hand.", "Click on it",];
-        var Q5_6_options = ["True", "False"];
-        var Q7_options = ["The goal is to learn which card is better", "The goal is to both remember the squares and learn which cards are better"]
-        var Q8_options = ["True", "False"];
-        var Q9_options = ["True - the response keys are related to the winning chances", "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning."];
+        var Q4_5_options = ["True", "False"];
+        var Q6_options = ["The goal is to learn which card is better", "The goal is learn which cards are better and also which shape is better"]
+        var Q7_options = ["True", "False"];
+        var Q8_options = ["True - the response keys are related to the winning chances", "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning."];
+        var Q9_options = ["after you choose it", "at the end of the block", "at the end of the experiment", "never"];
+
 
         var instructions_test = {
             type: 'survey-multi-choice',
@@ -166,12 +178,13 @@
                 { prompt: "What is the size of a card deck?", name: 'deck_size', correct: '4', options: Q1_2_options, required: true },
                 { prompt: "How many cards are presented on each step?", name: 'cards_step', correct: '2', options: Q1_2_options, required: true },
                 { prompt: "How do you choose a card?", name: 'choose_card', correct: 'Press the ‘S’ or ‘K’ key with your LEFT or RIGHT hand.', options: Q3_options, required: true },
-                { prompt: "How do you choose if a square is same or different?", name: 'choose_square', correct: 'Press the ‘S’ or ‘K’ key with your LEFT or RIGHT hand.', options: Q4_options, required: true },
-                { prompt: "Some cards are better than others.", name: 'better_cards', correct: 'True', options: Q5_6_options, required: true },
-                { prompt: "How ‘good’ or ‘bad’ a card is will change along the game.", name: 'value_change', correct: 'True', options: Q5_6_options, required: true },
-                { prompt: "What is the goal in the game?", name: 'game_goal', correct: 'The goal is to both remember the squares and learn which cards are better', options: Q7_options, required: true },
-                { prompt: "If one card leads you to more money, it means the other cards will probably lead you to less money ", name: 'value_independence', correct: 'False', options: Q8_options, required: true },
-                { prompt: "If you use the RIGHT and not the LEFT response keys, you might win more", name: 'location_value', correct: "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning.", options: Q9_options, required: true },
+                { prompt: "Some cards are better than others.", name: 'better_cards', correct: 'True', options: Q4_5_options, required: true },
+                { prompt: "How ‘good’ or ‘bad’ a card is will change along the game.", name: 'value_change', correct: 'False', options: Q4_5_options, required: true },
+                { prompt: "What is the goal in the game?", name: 'game_goal', correct: 'The goal is to learn which card is better', options: Q6_options, required: true },
+                { prompt: "If one card leads you to more money, it means the other cards will probably lead you to less money ", name: 'value_independence', correct: 'False', options: Q7_options, required: true },
+                { prompt: "If you use the RIGHT and not the LEFT response keys, you might win more", name: 'location_value', correct: "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning.", options: Q8_options, required: true },
+                { prompt: "when do you if tou got a coin from choosing a shape?", name: 'location_value', correct: "at the end of the block", options: Q9_options, required: true },
+
             ],
         };
 
@@ -245,39 +258,74 @@
         function get_squares(images, number_of_images) {
             return jsPsych.randomization.sampleWithoutReplacement(change_detection_images, number_of_images)
         }
-        function draw_show_cards(deck) {
+        function draw_show_cards(deck, practice) {
+            if (practice==1){ //practice only cards
+                drawn= jsPsych.randomization.sampleWithoutReplacement([0,2],1);
+                if (drawn==0){
+                    arr= jsPsych.randomization.shuffle([deck[0], deck[1]]);
+                }
+                else{
+                    arr= jsPsych.randomization.shuffle([deck[2], deck[3]]);
+                }
+                left_card=arr[0];
+                right_card=arr[1];
+                left_with_tag = "<img class='card_left' src='" + left_card + "'>"
+                right_with_tag = "<img class='card_right' src='" + right_card + "'>"
+                return left_with_tag + right_with_tag + fixation;
+            }
+            if (practice==2){ //full practice
+                trial_type=practice_order[practice_number];
+            }
             if (trial_type==0){ //A B
                 arr= jsPsych.randomization.shuffle([deck[0],deck[1]])
                 left_card=arr[0];
                 right_card=arr[1];
+                left_with_tag = "<img class='card_left' src='" + left_card + "'>"
+                right_with_tag = "<img class='card_right' src='" + right_card + "'>"
             }
             else if (trial_type==1){// C D
                 arr= jsPsych.randomization.shuffle([deck[2],deck[3]])
                 left_card=arr[0];
                 right_card=arr[1];
+                left_with_tag = "<img class='card_left' src='" + left_card + "'>"
+                right_with_tag = "<img class='card_right' src='" + right_card + "'>"
             }
             else{ // catch trial
-                catch_trials_number+=1;
+                left_card= catch_trials_images[catch_trials_number]
+                right_card= catch_trials_images[catch_trials_number+1]
+                catch_trials_number+=2;
+                if(block>=2){
+                    left_with_tag = "<img class='card_left' src='" + left_card + "' style='transform: rotate(180deg);'>"
+                    right_with_tag = "<img class='card_right' src='" + right_card + "' style='transform: rotate(180deg);'>"
+                }
+                else{
+                    left_with_tag = "<img class='card_left' src='" + left_card + "'>"
+                    right_with_tag = "<img class='card_right' src='" + right_card + "'>"
+                }
             }
-            // drawn_cards = jsPsych.randomization.sampleWithoutReplacement([0,2], 2)
-            // arr= jsPsych.randomization.shuffle([deck[drawn_cards[0]],deck[drawn_cards[0]+1]])
-            // left_card=arr[0];
-            // right_card=arr[1];
-            left_with_tag = "<img class='card_left' src='" + left_card + "'>"
-            right_with_tag = "<img class='card_right' src='" + right_card + "'>"
+
             return left_with_tag + right_with_tag + fixation;
         }
 
         function show_choice() {
-
             last_choice = jsPsych.pluginAPI.convertKeyCodeToKeyCharacter(jsPsych.data.getLastTrialData().values()[0].key_press)
             if (last_choice == 's') { 
                 selected = 0
-                card_to_show = "<img class='card_left' src='" + left_card + "'>"
+                if(trial_type==2 && block>=2){
+                    card_to_show = "<img class='card_left' src='" + left_card + "' style='transform: rotate(180deg);'>"  
+                }
+                else{
+                    card_to_show = "<img class='card_left' src='" + left_card + "'>"
+                }
             }
             else if (last_choice == 'k') {
                 selected = 1
-                card_to_show = "<img class='card_right' src='" + right_card + "'>"
+                if(trial_type==2 && block>=2){
+                    card_to_show = "<img class='card_right' src='" + right_card + "' style='transform: rotate(180deg);'>"
+                }
+                else{
+                    card_to_show = "<img class='card_right' src='" + right_card + "'>"
+                }
             }
             else {
                 selected = null
@@ -290,23 +338,43 @@
         function show_reward (){
             key_selected = jsPsych.data.getLastTrialData().values()[0].key_selected
             if (key_selected == 0) {    
-                card_to_show = "<img class='card_left' src='" + left_card + "'>"
+                if(trial_type==2 && block>=2){
+                    card_to_show = "<img class='card_left' src='" + left_card + "' style='transform: rotate(180deg);'>"
+                }
+                else{
+                    card_to_show = "<img class='card_left' src='" + left_card + "'>"
+                }
             }
             else if (key_selected == 1) {
-                card_to_show = "<img class='card_right' src='" + right_card + "'>"
+                if(trial_type==2 && block>=2){
+                    card_to_show = "<img class='card_right' src='" + right_card + "' style='transform: rotate(180deg);'>"
+                }
+                else{
+                    card_to_show = "<img class='card_right' src='" + right_card + "'>"
+                }
             }
             else {
                 return '<div style="font-size:40px;">Please respond faster!</div>'
             }
             card_selected = jsPsych.data.getLastTrialData().values()[0].card_selected
-            prob_reward = FB_array[card_selected+block_type*4];
+            if (trial_type == 2){
+                prob_reward = 0.5;
+            }
+            else{
+                prob_reward = FB_array[card_selected+block_type*4];
+            }
             prob_unreward = 1 - prob_reward;
             reward = jsPsych.randomization.sampleWithReplacement([0, 1], 1, [prob_unreward, prob_reward])[0];
             reward_to_show = "<img class=reward src='" + reward_images[reward] + "'>"
-            prob_to_show = '<p>' + prob_reward + '</p>'
-
-
-            return card_to_show + reward_to_show + prob_to_show
+            //prob_to_show = '<p>' + prob_reward + '</p>'
+            if (trial_type == 2){
+                sum_reward_catch_trials+=reward;
+                return card_to_show
+            }
+            else{
+                sum_reward_test_trials+=reward;
+                return card_to_show + reward_to_show //+ prob_to_show
+            }
         }
 
         function images_for_block_start() {
@@ -350,14 +418,18 @@
             type: 'html-keyboard-response',
             stimulus: '<div>We will now do a few practice trials which will contain only the cards part without the squares. <br> Please be ready with your fingers on <b>"s"</b> and <b>"k".</b> <br><br> <b> Press any key to begin</b></div>',
             post_trial_gap: 1000,
-            on_finish: function () { document.querySelector('head').insertAdjacentHTML('beforeend', '<style id="cursor-toggle"> html { cursor: none; } </style>') },
+            on_finish: function () { 
+                practice_type=1;
+                document.querySelector('head').insertAdjacentHTML('beforeend', '<style id="cursor-toggle"> html { cursor: none; } </style>') 
+            },
         }
         var start_practice_cards = {
             type: 'html-keyboard-response',
-            stimulus: '<div>We will now start a few practice trials with both the cards and the squares. <br> Please be ready with your fingers on <b>"s"</b> and <b>"k"</b> <br><br> <b> Press any key to begin</b></div>',
+            stimulus: '<div>We will now start a few practice trials with both the cards and the shapes. <br> Please be ready with your fingers on <b>"s"</b> and <b>"k"</b> <br><br> <b> Press any key to begin</b></div>',
             post_trial_gap: 1000,
             on_finish: function () { //trial_by_trial condition for practice
                 //condition_cards = jsPsych.randomization.sampleWithoutReplacement(['1same', '1diff', '4same', '4diff'], 1)[0]
+                practice_type=2;
                 document.querySelector('head').insertAdjacentHTML('beforeend', '<style id="cursor-toggle"> html { cursor: none; } </style>')
             }
         }
@@ -369,43 +441,13 @@
             trial_duration: 900
         }
 
-        // var fixation_memory = {
-        //     type: 'html-keyboard-response',
-        //     stimulus: fixation,
-        //     choices: jsPsych.NO_KEYS,
-        //     trial_duration: 1000,
-        // }
-        // var memory_for_cards_prac = {
-        //     type: "html-keyboard-response",
-        //     stimulus: function () {
-        //         number_of_images = parseInt(condition_cards[0])
-        //         if (number_of_images != 0) {
-        //             change_detection_images = jsPsych.randomization.shuffle(change_detection_images) //we don't shuffle for 0 condition
-        //         }
-        //         else {
-        //             number_of_images += 1 //we want it to give one square after all
-        //         }
-        //         current_locations = get_locations(locations, number_of_images, locations_setsize1)
-        //         squares = '';
-        //         for (index = 0; index < number_of_images; index++) {
-        //             squares += current_locations[index] + change_detection_images[index] + ">"
-        //         }
-        //         return squares + fixation;
-        //     },
-        //     choices: jsPsych.NO_KEYS,
-        //     trial_duration: 200,
-        //     data: {
-        //         phase: 'practice', trial_name: 'memory_cards', trial_num: function () { return current_cards_practice_trial },
-        //         set_size: function () {
-        //             return condition_cards[0]
-        //         }
-        //     }
-        // }
-
         var practice_cards1 = {
             type: "html-keyboard-response",
             stimulus: function () {
-                return draw_show_cards(practice_deck_images)
+                if(practice_type==2){
+                    practice_number+=1;
+                }
+                return draw_show_cards(practice_deck_images, practice_type)
             },
             choices: ['s', 'k'],
             trial_duration: 6000,
@@ -443,49 +485,6 @@
             }
         }
 
-        var practice_cards2 = {
-            type: "html-keyboard-response",
-            stimulus: function () {
-                left_card = drawn_cards[2];
-                right_card = drawn_cards[3];
-                left_with_tag = "<img class='card_left' src='" + left_card + "'>"
-                right_with_tag = "<img class='card_right' src='" + right_card + "'>"
-                return left_with_tag + right_with_tag + fixation;
-            },
-            choices: ['s', 'k'],
-            trial_duration: 6000,
-            data: { phase: 'practice', trial_name: 'cards2', trial_num: function () { return current_cards_practice_trial } }
-        }
-        var practice_choice2 = {
-            type: "html-keyboard-response",
-            stimulus: show_choice,
-            choices: jsPsych.NO_KEYS,
-            trial_duration: 500,
-            data: { phase: 'practice', trial_name: 'choice2', trial_num: function () { return current_cards_practice_trial } },
-            on_finish: function (data) {
-                data.key_selected = selected
-                if (selected == 0) {
-                    data.card_selected = practice_deck_images.indexOf(left_card)
-                }
-                else if (selected == 1) {
-                    data.card_selected = practice_deck_images.indexOf(right_card)
-                }
-            }
-        }
-
-        var practice_reward2 = {
-            type: "html-keyboard-response",
-            stimulus: function () {
-                return show_reward()
-            },
-            choices: jsPsych.NO_KEYS,
-            trial_duration: 750,
-            data: { phase: 'practice', trial_name: 'reward2', trial_num: function () { return current_cards_practice_trial } }
-            , on_finish: function (data) {
-                data.reward = reward;
-            }
-        }
-
         /*---------------------------------------------------- 
         Start exp part of card game
         ------------------------------------------------------*/
@@ -516,7 +515,7 @@
             type: "html-keyboard-response",
             stimulus: function () {
                 trial_type=trial_order[current_cards_exp_trial]
-                return draw_show_cards(images_for_block_start())
+                return draw_show_cards(images_for_block_start(), 0)
             },
             choices: ['s', 'k'],
             trial_duration: 6000,
@@ -566,21 +565,29 @@
         var finish_block = {
             type: 'html-keyboard-response',
             stimulus: function () {
+    
                 finish_block_string = '<p>Good job!</p>' + '<p style="text-align: left"><br> Test block ' + (block + 1) + ' out of ' + (blocks) + ' is over.'
+                finish_block_string += ' You earned ' + sum_reward_test_trials + '$ on test trials and ' + sum_reward_catch_trials + '$ on catch trials.<br>'
                 if (block != 3) {
-                    finish_block_string += ' You can stretch a little and take a short break while sitting in front of the screen, if needed.</p><p> <br><br><br><b>Press SPACE to continue</b>  </p>'
+                    finish_block_string += 'You can stretch a little and take a short break while sitting in front of the screen, if needed.</p><p> <br><br><br><b>Press SPACE to continue</b>  </p>'
                 }
                 else {
-                    finish_block_string += ' We will now continue to answer some questions.</p><p> <br><br><br><b>Press SPACE to continue</b>  </p>'
+                    finish_block_string += 'We will now continue to answer some questions.</p><p> <br><br><br><b>Press SPACE to continue</b>  </p>'
                 }
                 return finish_block_string
             },
             post_trial_gap: 1000,
             choices: [32],
             on_finish: function () {
+                if (block == 1) {
+                    catch_trials_number=0;
+                    catch_trials_images=jsPsych.randomization.shuffle(catch_trials_images);
+                }
                 block += 1;
                 current_cards_exp_trial = 0;
                 trial_order=jsPsych.randomization.shuffle(trial_order);
+                sum_reward_catch_trials=0;
+                sum_reward_test_trials=0;
             }
         }
 
@@ -588,17 +595,19 @@
         Define timeline for card part
         ------------------------------------------------------*/
         var demo_procedure_only_cards = {
-            timeline: [fixation_cards, practice_cards1, practice_choice1, practice_reward1, fixation_cards, practice_cards2, practice_choice2, practice_reward2],
-            repetitions: 1 //every trial takes 500+200+2*(900+1500+500+750)+1500+500 =10 sec per trial, 6 trials = 60 sec
+            //timeline: [fixation_cards, practice_cards1, practice_choice1, practice_reward1, fixation_cards, practice_cards2, practice_choice2, practice_reward2],
+            timeline: [fixation_cards, practice_cards1, practice_choice1, practice_reward1],
+            repetitions: 3  //every trial takes 500+200+2*(900+1500+500+750)+1500+500 =10 sec per trial, 6 trials = 60 sec
         }
 
-        // var demo_procedure_cards = {
-        //     timeline: [fixation_memory, memory_for_cards_prac, fixation_cards, practice_cards1, practice_choice1, practice_reward1, fixation_cards, practice_cards2, practice_choice2, practice_reward2, test_for_cards_prac, feedback_squares],
-        //     repetitions: 3 //every trial takes 500+200+2*(900+1500+500+750)+1500+500 =10 sec per trial, 6 trials = 60 sec
-        // }
+        var demo_procedure_cards = {
+            timeline: [fixation_cards, practice_cards1, practice_choice1, practice_reward1],
+            repetitions: 3 //every trial takes 500+200+2*(900+1500+500+750)+1500+500 =10 sec per trial, 6 trials = 60 sec
+        }
+
         var instructions_loop = {
             //timeline: [instructions_cards, start_practice_only_cards, demo_procedure_only_cards, instructions_combined, start_practice_cards, demo_procedure_cards, start_instructions_test, instructions_test, check_answers],
-            timeline: [instructions_cards, start_practice_only_cards, demo_procedure_only_cards, start_instructions_test, instructions_test, check_answers],
+            timeline: [instructions_cards, start_practice_only_cards, demo_procedure_only_cards, instructions_combined, start_practice_cards, demo_procedure_cards,start_instructions_test, instructions_test, check_answers],
             loop_function: function () {
                 if (to_repeat == true) {
                     return true;
@@ -608,9 +617,8 @@
             }
         }
         var test_procedure_cards = {
-            //timeline: [fixation_memory, memory_for_cards, fixation_cards, exp_cards1, exp_choice1, exp_reward1, fixation_cards, exp_cards2, exp_choice2, exp_reward2, test_for_cards, feedback_squares],
             timeline: [fixation_cards, exp_cards1, exp_choice1, exp_reward1],
-            repetitions: 3 // 10sec per trial - 50 trials per block.
+            repetitions: 50 // 10sec per trial - 50 trials per block.
         }
         var test_blocks = {
             timeline: [start_block, test_procedure_cards, finish_block],
@@ -618,8 +626,7 @@
         };
 
         var full_procedure_cards = {
-            //timeline: [instructions_loop, start_exp_cards, test_blocks]
-            timeline: [start_exp_cards, test_blocks]
+            timeline: [instructions_loop, start_exp_cards, test_blocks]
         } //instructions+test takes 180sec 
         timeline.push(full_procedure_cards)
 
