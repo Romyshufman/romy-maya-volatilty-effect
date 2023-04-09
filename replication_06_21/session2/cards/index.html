@@ -91,7 +91,7 @@
         var locations = ["<img class='a' src=", "<img class='b' src=", "<img class='c' src=", "<img class='d' src=", "<img class='e' src=", "<img class='f' src=", "<img class='g' src=", "<img class='h' src=", "<img class='i' src=", "<img class='j' src=", "<img class='k' src=", "<img class='l' src=",]
         var locations_setsize1 = ["<img class='upper1' src=", "<img class='upper2' src=", "<img class='upper3' src=", "<img class='lower1' src=", "<img class='lower2' src=", "<img class='lower3' src="]
         var fixation = '<div class="fixation">+</div>'
-        var surprise= 'images/'
+        var surprise= 'images/surprise.jpeg'
         var block_type=0;
         var blocks_order=jsPsych.randomization.shuffle([0,1,2,3]);
         var trial_type=0;
@@ -318,6 +318,10 @@
                 reward = 0
                 return '<div style="font-size:40px;">Please respond faster!</div>'
             }
+            if(trial_type==2){
+                surprise_to_show = "<img class=surprise src='" + surprise + "'>"
+                return card_to_show + surprise_to_show
+            }
             return card_to_show + fixation
         }
 
@@ -386,7 +390,6 @@
         var current_cards_exp_trial = 0;
         var block = 0;
         var blocks = 4;
-        //var condition_cards_number = jsPsych.randomization.shuffle(['0', '1', '4']) //defining block order
         var draw_cards;
         var drawn_cards;
         var left_card;
@@ -580,7 +583,6 @@
         Define timeline for card part
         ------------------------------------------------------*/
         var demo_procedure_only_cards = {
-            //timeline: [fixation_cards, practice_cards1, practice_choice1, practice_reward1, fixation_cards, practice_cards2, practice_choice2, practice_reward2],
             timeline: [fixation_cards, practice_cards1, practice_choice1, practice_reward1],
             repetitions: 3  //every trial takes 500+200+2*(900+1500+500+750)+1500+500 =10 sec per trial, 6 trials = 60 sec
         }
@@ -591,7 +593,6 @@
         }
 
         var instructions_loop = {
-            //timeline: [instructions_cards, start_practice_only_cards, demo_procedure_only_cards, instructions_combined, start_practice_cards, demo_procedure_cards, start_instructions_test, instructions_test, check_answers],
             timeline: [instructions_cards, start_practice_only_cards, demo_procedure_only_cards, instructions_combined, start_practice_cards, demo_procedure_cards,start_instructions_test, instructions_test, check_answers],
             loop_function: function () {
                 if (to_repeat == true) {
@@ -611,8 +612,7 @@
         };
 
         var full_procedure_cards = {
-            //timeline: [instructions_loop, start_exp_cards, test_blocks]
-            timeline: [start_exp_cards, test_blocks]
+            timeline: [instructions_loop, start_exp_cards, test_blocks]
 
         } //instructions+test takes 180sec 
         timeline.push(full_procedure_cards)
