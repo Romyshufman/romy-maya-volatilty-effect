@@ -66,6 +66,18 @@
 
         --top_reward: 0px;
         --left_reward: 0px;
+
+        --top_surprise: 0px;
+        --left_surprise: 0px;
+    }
+
+    .surprise {
+        /* surprise will be in the middle of the screen in catch trials*/
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        height: 100px;
+        width: 100px;
     }
 
     .fixation {
