@@ -66,6 +66,8 @@
         root.style.setProperty('--top_card', window.screen.height / 2 - 90 + "px");
         root.style.setProperty('--top_reward', window.screen.height / 2 + "px");
         root.style.setProperty('--left_reward', window.screen.width / 2 + "px");
+        root.style.setProperty('--top_surprise', window.screen.height / 2 + "px");
+        root.style.setProperty('--left_surprise', window.screen.width / 2 + "px");
 
         /*---------------------------------------------------- 
         Card game starts
@@ -89,6 +91,7 @@
         var locations = ["<img class='a' src=", "<img class='b' src=", "<img class='c' src=", "<img class='d' src=", "<img class='e' src=", "<img class='f' src=", "<img class='g' src=", "<img class='h' src=", "<img class='i' src=", "<img class='j' src=", "<img class='k' src=", "<img class='l' src=",]
         var locations_setsize1 = ["<img class='upper1' src=", "<img class='upper2' src=", "<img class='upper3' src=", "<img class='lower1' src=", "<img class='lower2' src=", "<img class='lower3' src="]
         var fixation = '<div class="fixation">+</div>'
+        var surprise= 'images/'
         var block_type=0;
         var blocks_order=jsPsych.randomization.shuffle([0,1,2,3]);
         var trial_type=0;
@@ -238,26 +241,6 @@
             return random_locations
         }
 
-        /*This function combines the squares and the locations that were randomly chosen */
-        function generate_random_squares(condition) {
-            number_of_images = parseInt(condition[0])
-            change_detection_images = jsPsych.randomization.shuffle(change_detection_images)
-            current_locations = get_locations(locations, number_of_images, locations_setsize1)
-            squares = '';
-            for (index = 0; index < number_of_images; index++) {
-                squares += current_locations[index] + change_detection_images[index] + ">"
-            }
-            return squares + fixation;
-        }
-
-        //This function decides on a random location for the test square
-        function getRandomInt(max) {
-            return Math.floor(Math.random() * Math.floor(max));
-        }
-        //This function picks squares to show
-        function get_squares(images, number_of_images) {
-            return jsPsych.randomization.sampleWithoutReplacement(change_detection_images, number_of_images)
-        }
         function draw_show_cards(deck, practice) {
             if (practice==1){ //practice only cards
                 drawn= jsPsych.randomization.sampleWithoutReplacement([0,2],1);
@@ -302,6 +285,9 @@
                     left_with_tag = "<img class='card_left' src='" + left_card + "'>"
                     right_with_tag = "<img class='card_right' src='" + right_card + "'>"
                 }
+                surprise_to_show = "<img class=surprise src='" + surprise + "'>"
+                return left_with_tag + surprise_to_show + right_with_tag;
+
             }
 
             return left_with_tag + right_with_tag + fixation;
@@ -366,14 +352,13 @@
             prob_unreward = 1 - prob_reward;
             reward = jsPsych.randomization.sampleWithReplacement([0, 1], 1, [prob_unreward, prob_reward])[0];
             reward_to_show = "<img class=reward src='" + reward_images[reward] + "'>"
-            //prob_to_show = '<p>' + prob_reward + '</p>'
             if (trial_type == 2){
                 sum_reward_catch_trials+=reward;
                 return card_to_show
             }
             else{
                 sum_reward_test_trials+=reward;
-                return card_to_show + reward_to_show //+ prob_to_show
+                return card_to_show + reward_to_show
             }
         }
 
@@ -626,7 +611,9 @@
         };
 
         var full_procedure_cards = {
-            timeline: [instructions_loop, start_exp_cards, test_blocks]
+            //timeline: [instructions_loop, start_exp_cards, test_blocks]
+            timeline: [start_exp_cards, test_blocks]
+
         } //instructions+test takes 180sec 
         timeline.push(full_procedure_cards)
 
