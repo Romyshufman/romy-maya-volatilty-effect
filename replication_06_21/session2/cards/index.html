@@ -186,7 +186,7 @@
                 { prompt: "What is the goal in the game?", name: 'game_goal', correct: 'The goal is to learn which card is better', options: Q6_options, required: true },
                 { prompt: "If one card leads you to more money, it means the other cards will probably lead you to less money ", name: 'value_independence', correct: 'False', options: Q7_options, required: true },
                 { prompt: "If you use the RIGHT and not the LEFT response keys, you might win more", name: 'location_value', correct: "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning.", options: Q8_options, required: true },
-                { prompt: "when do you if tou got a coin from choosing a shape?", name: 'location_value', correct: "at the end of the block", options: Q9_options, required: true },
+                { prompt: "when do you know if you got  a coin from choosing a shape?", name: 'reward_announce', correct: "at the end of the block", options: Q9_options, required: true },
 
             ],
         };
@@ -604,7 +604,7 @@
         }
         var test_procedure_cards = {
             timeline: [fixation_cards, exp_cards1, exp_choice1, exp_reward1],
-            repetitions: 50 // 10sec per trial - 50 trials per block.
+            repetitions: 8 // 10sec per trial - 50 trials per block.
         }
         var test_blocks = {
             timeline: [start_block, test_procedure_cards, finish_block],
@@ -613,6 +613,8 @@
 
         var full_procedure_cards = {
             timeline: [instructions_loop, start_exp_cards, test_blocks]
+            //timeline: [start_exp_cards, test_blocks]
+
 
         } //instructions+test takes 180sec 
         timeline.push(full_procedure_cards)
@@ -622,7 +624,7 @@
               ------------------------------------------------------*/
         jsPsych.init({
             timeline: timeline,
-            preload_images: change_detection_images, practice_deck_images, test_deck_images, reward_images, example_images,
+            preload_images: change_detection_images, practice_deck_images, test_deck_images, reward_images, example_images, catch_trials_images,
             show_preload_progress_bar: true,
             on_finish: function () {
                 // This all part is not used in this experiment (showing participants their bonus and capacity)
