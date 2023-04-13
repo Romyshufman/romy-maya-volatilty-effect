@@ -93,7 +93,7 @@
         display: block;
         margin-left: auto;
         margin-right: auto;
-        height: 100px;
+        height: 110px;
         width: 100px;
     }
 
@@ -107,18 +107,24 @@
         width: 217px;
     }
 
+    .start {
+        height: 192px;
+        width: 156px;
+        bottom: 50px;
+    }
+
     img.card_left {
         position: fixed;
-        height: 180px;
-        width: 130px;
+        height: 192px;
+        width: 156px;
         left: var(--left_card);
         top: var(--top_card);
     }
 
     img.card_right {
         position: fixed;
-        height: 180px;
-        width: 130px;
+        height: 192px;
+        width: 156px;
         right: var(--right_card);
         top: var(--top_card);
     }

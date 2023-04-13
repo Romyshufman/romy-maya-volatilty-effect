@@ -82,18 +82,14 @@
         ------------------------------------------------------*/
 
         var example_images = ['images/squares/example1.png', 'images/squares/example2.png', 'images/squares/example3.png', 'images/card deck 1/group.jpg']
-        var practice_deck_images = ['images/card deck 1/1.jpg', 'images/card deck 1/2.jpg', 'images/card deck 1/3.jpg', 'images/card deck 1/4.jpg']
-        var test_deck_images = ['images/old/f1.jpg', 'images/old/f2.jpg', 'images/old/f3.jpg', 'images/old/f4.jpg', 'images/old/f5.jpg', 'images/old/f6.jpg', 'images/old/f7.jpg', 'images/old/f8.jpg'
-            , 'images/old/f9.jpg', 'images/old/f10.jpg', 'images/old/f11.jpg', 'images/old/f12.jpg', 'images/old/f13.jpg', 'images/old/f14.jpg', 'images/old/f15.jpg', 'images/old/f16.jpg' ]
+        var practice_deck_images = ['images/old/17.jpg', 'images/old/18.jpg', 'images/old/19.jpg', 'images/old/20.jpg']
+        var test_deck_images = ['images/old/1.jpg', 'images/old/2.jpg', 'images/old/3.jpg', 'images/old/4.jpg', 'images/old/5.jpg', 'images/old/6.jpg', 'images/old/7.jpg', 'images/old/8.jpg'
+            , 'images/old/9.jpg', 'images/old/10.jpg', 'images/old/11.jpg', 'images/old/12.jpg', 'images/old/13.jpg', 'images/old/14.jpg', 'images/old/15.jpg', 'images/old/16.jpg' ]
         var reward_images = ['images/zero_coins.png', 'images/won1-no-back1.png']
-        var change_detection_images = ['images/squares/black.png', 'images/squares/blue.png', 'images/squares/brown.png', 'images/squares/cyan.png', 'images/squares/green.png', 'images/squares/magenta.png', 'images/squares/orange.png', 'images/squares/red.png', 'images/squares/yellow.png']
-        /* setting the locations to randomize from */
-        var locations = ["<img class='a' src=", "<img class='b' src=", "<img class='c' src=", "<img class='d' src=", "<img class='e' src=", "<img class='f' src=", "<img class='g' src=", "<img class='h' src=", "<img class='i' src=", "<img class='j' src=", "<img class='k' src=", "<img class='l' src=",]
-        var locations_setsize1 = ["<img class='upper1' src=", "<img class='upper2' src=", "<img class='upper3' src=", "<img class='lower1' src=", "<img class='lower2' src=", "<img class='lower3' src="]
         var fixation = '<div class="fixation">+</div>'
         var surprise= 'images/surprise.jpeg'
-        var block_type=0;
-        var blocks_order=jsPsych.randomization.shuffle([0,1,2,3]);
+
+        var block_type=Number(jsPsych.randomization.sampleWithoutReplacement([0,1,2,3], 1));
         var trial_type=0;
         //0-A B, 1- C D, 2-catch trial
         var trial_order=jsPsych.randomization.shuffle([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2])
@@ -167,12 +163,14 @@
             stimulus: "<p> <br><br> You will now move on to a quick quiz to make sure you understood the instructions. If you will have a mistake you will need to go again through the instructions. <br><br> <b> Press any key to continue</b></p>"
         }
         var Q1_2_options = ["2", "4", "6"];
-        var Q3_options = ["Click on it", "Press the LEFT or RIGHT arrow keys", "Press the ‘S’ or ‘K’ key with your LEFT or RIGHT hand."];
+        var Q3_options = ["Click on it", "Press the LEFT or RIGHT arrow keys", "Press the 'S' or 'K' key with your LEFT or RIGHT hand."];
         var Q4_5_options = ["True", "False"];
         var Q6_options = ["The goal is to learn which card is better", "The goal is learn which cards are better and also which shape is better"]
         var Q7_options = ["True", "False"];
         var Q8_options = ["True - the response keys are related to the winning chances", "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning."];
-        var Q9_options = ["after you choose it", "at the end of the block", "at the end of the experiment", "never"];
+        var Q9_options = ["After choosing the shape.", "At the end of the block.", "At the end of the game.", "Never."];
+        var Q10_options = ["True", "False"];
+
 
 
         var instructions_test = {
@@ -183,10 +181,10 @@
                 { prompt: "How do you choose a card?", name: 'choose_card', correct: 'Press the ‘S’ or ‘K’ key with your LEFT or RIGHT hand.', options: Q3_options, required: true },
                 { prompt: "Some cards are better than others.", name: 'better_cards', correct: 'True', options: Q4_5_options, required: true },
                 { prompt: "How ‘good’ or ‘bad’ a card is will change along the game.", name: 'value_change', correct: 'False', options: Q4_5_options, required: true },
-                { prompt: "What is the goal in the game?", name: 'game_goal', correct: 'The goal is to learn which card is better', options: Q6_options, required: true },
-                { prompt: "If one card leads you to more money, it means the other cards will probably lead you to less money ", name: 'value_independence', correct: 'False', options: Q7_options, required: true },
+                { prompt: "If one card leads you to a large sum of money, it means the other card will probably lead you to a small sum of money.", name: 'value_independence', correct: 'False', options: Q7_options, required: true },
                 { prompt: "If you use the RIGHT and not the LEFT response keys, you might win more", name: 'location_value', correct: "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning.", options: Q8_options, required: true },
-                { prompt: "when do you know if you got  a coin from choosing a shape?", name: 'reward_announce', correct: "at the end of the block", options: Q9_options, required: true },
+                { prompt: "When do you know how many coins you got from steps in which you are choosing a shape?", name: 'reward_announce', correct: "At the end of the block.", options: Q9_options, required: true },
+                { prompt: "The same shape can be presented multiple times throughout the game.", name: 'shapes_repeated', correct: 'False', options: Q10_options, required: true },
 
             ],
         };
@@ -358,7 +356,8 @@
             reward_to_show = "<img class=reward src='" + reward_images[reward] + "'>"
             if (trial_type == 2){
                 sum_reward_catch_trials+=reward;
-                return card_to_show
+                surprise_to_show = "<img class=surprise src='" + surprise + "'>"
+                return card_to_show + surprise_to_show
             }
             else{
                 sum_reward_test_trials+=reward;
@@ -486,13 +485,13 @@
         var start_block = {
             type: 'html-keyboard-response',
             stimulus: function () {
-                block_type=blocks_order[block];
+                block_type=(block_type+1)%4;
                 return '<p><b><u>Test block ' + (block + 1) + ' out of ' + (blocks) + '</u></b></p>' + '<p style="text-align: left"> You will now start a test block. Below are the four cards that can appear in this round.</p>'
                     + '<p style="text-align: left">Use the LEFT or RIGHT response keys (‘s’ or ‘k’, in correspondence) to make your selection. <br> Please do your best to remember the squares and to win as many coins as possible!<br> </p>'
                     + '<p style="text-align: left">Remember that: <br> 1) How ‘good’ each card is can change along the round <br> 2) Only the cards (not the response key that was used to select them) predict an outcome <br> 3) The chance that each card will give you money has nothing to do with the other cards </p>'
                     + '<p><b>Press SPACE to start</b></p>'
-                    + '<img src="' + images_for_block_start()[0] + '">  ' + '<img src="' + images_for_block_start()[1] + '">    ' + '<img src="' + images_for_block_start()[2]
-                    + '">    ' + '<img src="' + images_for_block_start()[3] + '">  '
+                    + '<img class=start src="' + images_for_block_start()[0] + '">  ' + '<img class=start src="' + images_for_block_start()[1] + '">    ' + '<img class=start src="' + images_for_block_start()[2]
+                    + '">    ' + '<img class=start src="' + images_for_block_start()[3] + '">  '
             },
             choices: [32]
             , post_trial_gap: 1000,
@@ -624,7 +623,7 @@
               ------------------------------------------------------*/
         jsPsych.init({
             timeline: timeline,
-            preload_images: change_detection_images, practice_deck_images, test_deck_images, reward_images, example_images, catch_trials_images,
+            preload_images: practice_deck_images, test_deck_images, reward_images, example_images, catch_trials_images,
             show_preload_progress_bar: true,
             on_finish: function () {
                 // This all part is not used in this experiment (showing participants their bonus and capacity)
