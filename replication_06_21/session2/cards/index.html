@@ -81,7 +81,6 @@
         Define images
         ------------------------------------------------------*/
 
-        var example_images = ['images/squares/example1.png', 'images/squares/example2.png', 'images/squares/example3.png', 'images/card deck 1/group.jpg']
         var practice_deck_images = ['images/old/17.jpg', 'images/old/18.jpg', 'images/old/19.jpg', 'images/old/20.jpg']
         var test_deck_images = ['images/old/1.jpg', 'images/old/2.jpg', 'images/old/3.jpg', 'images/old/4.jpg', 'images/old/5.jpg', 'images/old/6.jpg', 'images/old/7.jpg', 'images/old/8.jpg'
             , 'images/old/9.jpg', 'images/old/10.jpg', 'images/old/11.jpg', 'images/old/12.jpg', 'images/old/13.jpg', 'images/old/14.jpg', 'images/old/15.jpg', 'images/old/16.jpg' ]
@@ -89,6 +88,9 @@
         var fixation = '<div class="fixation">+</div>'
         var surprise= 'images/surprise.jpeg'
 
+        /*----------------------------------------------------
+        Define game-related settings
+        ------------------------------------------------------*/
         var block_type=Number(jsPsych.randomization.sampleWithoutReplacement([0,1,2,3], 1));
         var trial_type=0;
         //0-A B, 1- C D, 2-catch trial
@@ -121,23 +123,23 @@
                 + "<p style='text-align:left'>Your winnings in this game will earn you additional payment bonus for the study."
                 + " If no extra money will be earned in the card game, you will still get £2.5 for completing this session of the study."
                 + " However, <b>you can gain up to an extra £0.9 based on winnings in the game.</b></p>",
-            "<p style='text-align:left'> We will now provide instructions regarding the card game. Please read them carefully. <br>"
-            + "Feel free to go back and forth between the screens.</p> "
-            + "<p style='text-align:left'>At the end of the instructions, <b>we will ask you to complete a short quiz about them</b>, to make sure everything is well understood.</p>",
-            "<p style='text-align:left'> Below is an example of a card-deck of four cards, very much like the cards in the game to follow. </p>" +
-            "<img class='group' src='images/group.jpg' >",
-            "<p> On each step, only two cards from the 4-card deck will be offered (as shown in the example below).<br>You will be able to select the <b>left card by pressing 's'</b> and the <b>right card by pressing 'k'</b> on your keyboard."
-            + " <br><br><u>Please do your best to respond as fast and accurate as you can.</u><br><br>"
-            + "<img class='example' src='images/example.jpg' >",
-            "<p style='text-align:left'>After selecting the card, you will see an outcome in the middle of the screen, as shown below.<br><br>"
-            + "<b>Winning very much depends on the card you chose - some cards are better than others in their deck.</b><br>"
-            + "Your task is to find out which card is the best in each deck at any time and choose it.<br><br> <b> Please note that the winning chances of the cards are independent</b>.<br> Learning about one card does not tell you anything about the other cards.</p>"
-            + "<br> <img class='example' src='images/reward_example.jpg'>",
-            "<p style='text-align:left'><u>Three important things to remember:</u><br>"
-            + "1. <b>How good a card is can not change along with the game</b> - every card has the same odds for winning during the whole game"
-            + "<br><br>2.<b> Only the cards are related to your chances of winning - </b> the location of the card and the response key you used to select it does not influence the chances of winning a coin.<br><br>"
-            + " 3. <b>The chance that each card will give you money has nothing to do with the other cards - </b> you can't learn about one card from the money rewards you got for the other.</p>"],
-            show_clickable_nav: true
+                "<p style='text-align:left'> We will now provide instructions regarding the card game. Please read them carefully. <br>"
+                + "Feel free to go back and forth between the screens.</p> "
+                + "<p style='text-align:left'>At the end of the instructions, <b>we will ask you to complete a short quiz about them</b>, to make sure everything is well understood.</p>",
+                "<p style='text-align:left'> Below is an example of a card-deck of four cards, very much like the cards in the game to follow. </p>" +
+                "<img class='group' src='images/group.jpg' >",
+                "<p> On each step, only two cards from the 4-card deck will be offered (as shown in the example below).<br>You will be able to select the <b>left card by pressing 'S'</b> and the <b>right card by pressing 'K'</b> on your keyboard."
+                + " <br><br><u>Please do your best to respond as fast and as accurate as you can.</u><br><br>"
+                + "<img class='example' src='images/example.jpg' >",
+                "<p style='text-align:left'>After selecting the card, you will see an outcome in the middle of the screen, as shown below.<br><br>"
+                + "<b>Winning very much depends on the card you chose - some cards are better than others in their deck.</b><br>"
+                + "Your task is to find out which card is the best in each deck at any time and choose it.<br><br> <b> Please note that the winning chances of the cards are independent</b>.<br> Learning about one card does not tell you anything about the other cards."
+                + "<br> Also, a card's winning chances <b>do not change</b> throughout the game.</p>"
+                + "<br> <img class='example' src='images/reward_example.jpg'>",
+                "<p style='text-align:left'><u>Two important things to remember:</u><br>"
+                 + " 1.<b> Only the cards are related to your chances of winning - </b> the location of the card and the response key you used to select it do not influence the chances of winning a coin.<br><br>"
+                 + " 2. <b>The chance that each card will give you money has nothing to do with the other cards - </b> you can't learn about one card from the money rewards you got for the other.</p>"],
+                show_clickable_nav: true
         };
         var instructions_combined = {
             on_start: function () {
@@ -146,11 +148,12 @@
                 }
             },
             type: "instructions",
-            pages: [" <p style='text-align:left'>In the experiment you will play the card game that has been explained above. in addition, somtimes two shapes will apear- you need to choose one in the way you choose card. note- some shapes are better that others."
-                +" <b><br>Below is an example of a two shapes. notice- each shape will apear exactly one time in the game</b> "
-                +" <b><br>One goal is to learn which cards are more rewarding. The second goal is to choose shape on the trials where they appear. note- you won't see the reward you earned/ not earned when you decided which shape to choose, but in the end of the block you will see how much money you earned from the shapes in total. </b> "
-                +"<p style='text-align:left'> In the card game, pressing <b>'s'</b> means you think the left card is better, and pressing <b>'k'</b> means you think the right card is better."
-                +"Like in the cards trials, pressing <b>'s'</b> means you choose the left shape, and pressing <b>'k'</b> means you choose the right shape.</p>"
+            pages: [" <p style='text-align:left'>In the experiment you will play the card game that has been explained above."
+                +"<br>In addition, once every few steps, you will be presented with two brand new shapes. You will need to select one the same way you select cards. It is an opportunity for you to earn more money!"
+                +" <b><br>Below is an example of such two shapes. Notice - each shape will appear exactly once in the game!</b> "
+                +" <br>That means you have another task, and that is to earn as much money as you can in shapes steps.<br>"
+                +" Note that you won't be able to tell what the outcome of your selection was right after selecting a shape. Instead, <b>at the end of the block, you will be informed of the total amount you've earned from shapes steps. </b> "
+                +"<p style='text-align:left'> As in the card game, pressing <b>'S'</b> means you think the left shape is better, and pressing <b>'K'</b> means you think the right shape is better.</p>"
                 +"<br> <img class='example' src='images/group-shapes.png'>"],
                 show_clickable_nav: true
         }
@@ -160,16 +163,15 @@
                     document.querySelector('#cursor-toggle').remove()
             },
             type: 'html-keyboard-response',
-            stimulus: "<p> <br><br> You will now move on to a quick quiz to make sure you understood the instructions. If you will have a mistake you will need to go again through the instructions. <br><br> <b> Press any key to continue</b></p>"
+            stimulus: "<p> <br><br> You will now move on to a quick quiz to make sure you understood the instructions. If you make a mistake, you will need to go through the instructions again. <br><br> <b> Press any key to continue</b></p>"
         }
         var Q1_2_options = ["2", "4", "6"];
-        var Q3_options = ["Click on it", "Press the LEFT or RIGHT arrow keys", "Press the 'S' or 'K' key with your LEFT or RIGHT hand."];
+        var Q3_options = ["Click on it.", "Press the LEFT or RIGHT arrow keys.", "Press the 'S' or 'K' key with your LEFT or RIGHT hand."];
         var Q4_5_options = ["True", "False"];
-        var Q6_options = ["The goal is to learn which card is better", "The goal is learn which cards are better and also which shape is better"]
-        var Q7_options = ["True", "False"];
-        var Q8_options = ["True - the response keys are related to the winning chances", "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning."];
-        var Q9_options = ["After choosing the shape.", "At the end of the block.", "At the end of the game.", "Never."];
-        var Q10_options = ["True", "False"];
+        var Q6_options = ["True", "False"];
+        var Q7_options = ["True - the response keys are related to the winning chances.", "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning."];
+        var Q8_options = ["After choosing the shape.", "At the end of the block.", "At the end of the game.", "Never."];
+        var Q9_options = ["True", "False"];
 
 
 
@@ -178,13 +180,13 @@
             questions: [
                 { prompt: "What is the size of a card deck?", name: 'deck_size', correct: '4', options: Q1_2_options, required: true },
                 { prompt: "How many cards are presented on each step?", name: 'cards_step', correct: '2', options: Q1_2_options, required: true },
-                { prompt: "How do you choose a card?", name: 'choose_card', correct: 'Press the ‘S’ or ‘K’ key with your LEFT or RIGHT hand.', options: Q3_options, required: true },
+                { prompt: "How do you choose a card?", name: 'choose_card', correct: "Press the 'S' or 'K' key with your LEFT or RIGHT hand.", options: Q3_options, required: true },
                 { prompt: "Some cards are better than others.", name: 'better_cards', correct: 'True', options: Q4_5_options, required: true },
-                { prompt: "How ‘good’ or ‘bad’ a card is will change along the game.", name: 'value_change', correct: 'False', options: Q4_5_options, required: true },
-                { prompt: "If one card leads you to a large sum of money, it means the other card will probably lead you to a small sum of money.", name: 'value_independence', correct: 'False', options: Q7_options, required: true },
-                { prompt: "If you use the RIGHT and not the LEFT response keys, you might win more", name: 'location_value', correct: "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning.", options: Q8_options, required: true },
-                { prompt: "When do you know how many coins you got from steps in which you are choosing a shape?", name: 'reward_announce', correct: "At the end of the block.", options: Q9_options, required: true },
-                { prompt: "The same shape can be presented multiple times throughout the game.", name: 'shapes_repeated', correct: 'False', options: Q10_options, required: true },
+                { prompt: "How 'good' or 'bad' a card is will change along the game.", name: 'value_change', correct: 'False', options: Q4_5_options, required: true },
+                { prompt: "If one card leads you to a large sum of money, it means the other card will probably lead you to a small sum of money.", name: 'value_independence', correct: 'False', options: Q6_options, required: true },
+                { prompt: "If you use the RIGHT and not the LEFT response keys, you might win more", name: 'location_value', correct: "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning.", options: Q7_options, required: true },
+                { prompt: "When do you know how many coins you got from steps in which you are choosing a shape?", name: 'reward_announce', correct: "At the end of the block.", options: Q8_options, required: true },
+                { prompt: "The same shape can be presented multiple times throughout the game.", name: 'shapes_repeated', correct: 'False', options: Q9_options, required: true },
 
             ],
         };
@@ -192,7 +194,7 @@
         var if_trial = {
             type: 'html-button-response',
             stimulus: "<p>Sorry. You made a mistake.<br>"
-                + "Let’s go back to the instructions. "
+                + "Let's go back to the instructions. "
                 + "Please read them carefully before submitting your answers. <br>"
                 + "Thank you!",
             choices: ['Back to instructions']
@@ -382,15 +384,13 @@
             hiddenElement.click();
         }
         /*---------------------------------------------------- 
-        Variabels for card game
+        Variables for card game
         ------------------------------------------------------*/
         var FB_array = [0.25,0.35,0.25,0.35,0.65,0.75,0.65,0.75,0.1,0.5,0.1,0.5,0.5,0.9,0.5,0.9];
         var current_cards_practice_trial = 0;
         var current_cards_exp_trial = 0;
         var block = 0;
         var blocks = 4;
-        var draw_cards;
-        var drawn_cards;
         var left_card;
         var right_card;
         var selected;
@@ -403,7 +403,7 @@
         timeline.push(enter_fullscreen)
         var start_practice_only_cards = {
             type: 'html-keyboard-response',
-            stimulus: '<div>We will now do a few practice trials which will contain only the cards part without the squares. <br> Please be ready with your fingers on <b>"s"</b> and <b>"k".</b> <br><br> <b> Press any key to begin</b></div>',
+            stimulus: '<div>We will now start a few practice trials which will contain only the cards part, without the shapes. <br> Please be ready with your fingers on <b>"S"</b> and <b>"K"</b>. <br><br> <b> Press any key to begin</b></div>',
             post_trial_gap: 1000,
             on_finish: function () { 
                 practice_type=1;
@@ -412,10 +412,9 @@
         }
         var start_practice_cards = {
             type: 'html-keyboard-response',
-            stimulus: '<div>We will now start a few practice trials with both the cards and the shapes. <br> Please be ready with your fingers on <b>"s"</b> and <b>"k"</b> <br><br> <b> Press any key to begin</b></div>',
+            stimulus: '<div>We will now start a few practice trials with both the cards and the shapes. <br> Please be ready with your fingers on <b>"S"</b> and <b>"K"</b>. <br><br> <b> Press any key to begin</b></div>',
             post_trial_gap: 1000,
             on_finish: function () { //trial_by_trial condition for practice
-                //condition_cards = jsPsych.randomization.sampleWithoutReplacement(['1same', '1diff', '4same', '4diff'], 1)[0]
                 practice_type=2;
                 document.querySelector('head').insertAdjacentHTML('beforeend', '<style id="cursor-toggle"> html { cursor: none; } </style>')
             }
@@ -476,9 +475,9 @@
         Start exp part of card game
         ------------------------------------------------------*/
 
-        var start_exp_cards = {
+        var start_exp = {
             type: 'html-keyboard-response',
-            stimulus: '<div> Good job! Practice completed. <br> <br> We will now move on to the real game. Do your best to remember the squares and to figure out which cards are better. Good luck!<br><br> <b>Press any key to continue.</b></div>',
+            stimulus: '<div> Good job! Practice completed. <br> <br> We will now move on to the real game. Do your best to figure out which cards are better. Good luck!<br><br> <b>Press any key to continue.</b></div>',
             post_trial_gap: 1000,
         }
 
@@ -487,8 +486,8 @@
             stimulus: function () {
                 block_type=(block_type+1)%4;
                 return '<p><b><u>Test block ' + (block + 1) + ' out of ' + (blocks) + '</u></b></p>' + '<p style="text-align: left"> You will now start a test block. Below are the four cards that can appear in this round.</p>'
-                    + '<p style="text-align: left">Use the LEFT or RIGHT response keys (‘s’ or ‘k’, in correspondence) to make your selection. <br> Please do your best to remember the squares and to win as many coins as possible!<br> </p>'
-                    + '<p style="text-align: left">Remember that: <br> 1) How ‘good’ each card is can change along the round <br> 2) Only the cards (not the response key that was used to select them) predict an outcome <br> 3) The chance that each card will give you money has nothing to do with the other cards </p>'
+                    + '<p style="text-align: left">Use the LEFT or RIGHT response keys ("S" or "K", in correspondence) to make your selection. <br> Please do your best to win as many coins as possible!<br> </p>'
+                    + '<p style="text-align: left">Remember that: <br> 1) Only the cards (not the response key that was used to select them) predict an outcome <br> 2) The chance that each card will give you money has nothing to do with the other cards </p>'
                     + '<p><b>Press SPACE to start</b></p>'
                     + '<img class=start src="' + images_for_block_start()[0] + '">  ' + '<img class=start src="' + images_for_block_start()[1] + '">    ' + '<img class=start src="' + images_for_block_start()[2]
                     + '">    ' + '<img class=start src="' + images_for_block_start()[3] + '">  '
@@ -506,7 +505,8 @@
             },
             choices: ['s', 'k'],
             trial_duration: 6000,
-            data: { phase: 'exp', trial_name: 'cards1', trial_num: function () { return current_cards_exp_trial } },
+            data: { phase: 'exp', trial_name: 'cards1', trial_num: function () { return current_cards_exp_trial },
+                    type_of_trial: function () { return (trial_type==2) } },
         }
 
         var exp_choice1 = {
@@ -514,7 +514,8 @@
             stimulus: show_choice,
             choices: jsPsych.NO_KEYS,
             trial_duration: 500,
-            data: { phase: 'exp', trial_name: 'choice1', trial_num: function () { return current_cards_exp_trial } },
+            data: { phase: 'exp', trial_name: 'choice1', trial_num: function () { return current_cards_exp_trial },
+                    type_of_trial: function () { return (trial_type==2) } },
             on_finish: function (data) {
                 data.key_selected = selected
                 if (selected == 0) {
@@ -533,8 +534,8 @@
             choices: jsPsych.NO_KEYS,
             trial_duration: 750,
             data: {
-                phase: 'exp', trial_name: 'reward1', trial_num: function () { return current_cards_exp_trial }, block: function () { return block }
-            },
+                phase: 'exp', trial_name: 'reward1', trial_num: function () { return current_cards_exp_trial },
+                type_of_trial: function () { return trial_type }, block: function () { return block } },
 
             on_finish: function (data) {
                 current_cards_exp_trial+=1;
@@ -554,7 +555,7 @@
             stimulus: function () {
     
                 finish_block_string = '<p>Good job!</p>' + '<p style="text-align: left"><br> Test block ' + (block + 1) + ' out of ' + (blocks) + ' is over.'
-                finish_block_string += ' You earned ' + sum_reward_test_trials + '$ on test trials and ' + sum_reward_catch_trials + '$ on catch trials.<br>'
+                finish_block_string += ' You earned ' + sum_reward_test_trials + ' coins on cards trials and ' + sum_reward_catch_trials + ' coins on shapes trials.<br>'
                 if (block != 3) {
                     finish_block_string += 'You can stretch a little and take a short break while sitting in front of the screen, if needed.</p><p> <br><br><br><b>Press SPACE to continue</b>  </p>'
                 }
@@ -611,7 +612,7 @@
         };
 
         var full_procedure_cards = {
-            timeline: [instructions_loop, start_exp_cards, test_blocks]
+            timeline: [instructions_loop, start_exp, test_blocks]
             //timeline: [start_exp_cards, test_blocks]
 
 
@@ -623,7 +624,7 @@
               ------------------------------------------------------*/
         jsPsych.init({
             timeline: timeline,
-            preload_images: practice_deck_images, test_deck_images, reward_images, example_images, catch_trials_images,
+            preload_images: practice_deck_images, test_deck_images, reward_images, catch_trials_images,
             show_preload_progress_bar: true,
             on_finish: function () {
                 // This all part is not used in this experiment (showing participants their bonus and capacity)
