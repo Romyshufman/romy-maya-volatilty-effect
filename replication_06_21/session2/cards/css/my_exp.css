@@ -107,11 +107,22 @@
         width: 217px;
     }
 
+    .exampleDeck {
+        height: 192px;
+        width: 156px;
+        margin-right: 5px;
+    }
+
+    .exampleReward {
+        height: 220px;
+        width: 200px;
+    }
+
     .start {
         height: 192px;
         width: 156px;
-        bottom: 50px;
     }
+
 
     img.card_left {
         position: fixed;

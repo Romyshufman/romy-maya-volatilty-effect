@@ -87,14 +87,6 @@
         var reward_images = ['images/zero_coins.png', 'images/won1-no-back1.png']
         var fixation = '<div class="fixation">+</div>'
         var surprise= 'images/surprise.jpeg'
-
-        /*----------------------------------------------------
-        Define game-related settings
-        ------------------------------------------------------*/
-        var block_type=Number(jsPsych.randomization.sampleWithoutReplacement([0,1,2,3], 1));
-        var trial_type=0;
-        //0-A B, 1- C D, 2-catch trial
-        var trial_order=jsPsych.randomization.shuffle([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2])
         var catch_trials_images = jsPsych.randomization.shuffle(['images/catch_trial/1.jpg', 'images/catch_trial/2.jpg', 'images/catch_trial/3.jpg', 'images/catch_trial/4.jpg', 'images/catch_trial/5.jpg', 'images/catch_trial/6.jpg', 'images/catch_trial/7.jpg', 'images/catch_trial/8.jpg',
                                     'images/catch_trial/9.jpg', 'images/catch_trial/10.jpg', 'images/catch_trial/11.jpg', 'images/catch_trial/12.jpg', 'images/catch_trial/13.jpg', 'images/catch_trial/14.jpg', 'images/catch_trial/15.jpg', 'images/catch_trial/16.jpg',
                                     'images/catch_trial/17.jpg', 'images/catch_trial/18.jpg', 'images/catch_trial/19.jpg', 'images/catch_trial/20.jpg', 'images/catch_trial/21.jpg', 'images/catch_trial/22.jpg', 'images/catch_trial/23.jpg', 'images/catch_trial/24.jpg',
@@ -103,10 +95,20 @@
                                     'images/catch_trial/41.jpg', 'images/catch_trial/42.jpg', 'images/catch_trial/43.jpg', 'images/catch_trial/44.jpg', 'images/catch_trial/45.jpg', 'images/catch_trial/46.jpg', 'images/catch_trial/47.jpg', 'images/catch_trial/48.jpg',
                                     'images/catch_trial/49.jpg', 'images/catch_trial/50.jpg', 'images/catch_trial/51.jpg', 'images/catch_trial/52.jpg', 'images/catch_trial/53.jpg', 'images/catch_trial/54.jpg', 'images/catch_trial/55.jpg', 'images/catch_trial/56.jpg',
                                     'images/catch_trial/57.jpg', 'images/catch_trial/58.jpg', 'images/catch_trial/59.jpg', 'images/catch_trial/60.jpg', 'images/catch_trial/61.jpg', 'images/catch_trial/62.jpg', 'images/catch_trial/63.jpg', 'images/catch_trial/64.jpg'])
+        var practice_catch_trials_images= jsPsych.randomization.shuffle(['images/practice_catch_trials/1.png','images/practice_catch_trials/2.png','images/practice_catch_trials/3.png','images/practice_catch_trials/4.png'])
+
+
+        /*----------------------------------------------------
+        Define game-related settings
+        ------------------------------------------------------*/
+        var block_type=Number(jsPsych.randomization.sampleWithoutReplacement([0,1,2,3], 1));
+        var trial_type=0;
+        //0-A B, 1- C D, 2-catch trial
+        var trial_order=jsPsych.randomization.shuffle([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2])
         var catch_trials_number = 0;
         var sum_reward_catch_trials=0;
         var sum_reward_test_trials=0;
-        var practice_order=jsPsych.randomization.shuffle([0,1,2])
+        var practice_order=jsPsych.randomization.shuffle([0,0,1,1,2,2])
         var practice_number=-1;
         var practice_type;
         /*---------------------------------------------------- 
@@ -127,15 +129,16 @@
                 + "Feel free to go back and forth between the screens.</p> "
                 + "<p style='text-align:left'>At the end of the instructions, <b>we will ask you to complete a short quiz about them</b>, to make sure everything is well understood.</p>",
                 "<p style='text-align:left'> Below is an example of a card-deck of four cards, very much like the cards in the game to follow. </p>" +
-                "<img class='group' src='images/group.jpg' >",
+                "<img class='exampleDeck' src='images/old/1.jpg' >"+"<img class='exampleDeck' src='images/old/3.jpg' >"+
+                "<img class='exampleDeck' src='images/old/8.jpg' >"+"<img class='exampleDeck' src='images/old/9.jpg' >",
                 "<p> On each step, only two cards from the 4-card deck will be offered (as shown in the example below).<br>You will be able to select the <b>left card by pressing 'S'</b> and the <b>right card by pressing 'K'</b> on your keyboard."
                 + " <br><br><u>Please do your best to respond as fast and as accurate as you can.</u><br><br>"
-                + "<img class='example' src='images/example.jpg' >",
+                + "<img class='exampleDeck' src='images/old/1.jpg' >"+ "<img class='exampleDeck' src='images/old/9.jpg' >",
                 "<p style='text-align:left'>After selecting the card, you will see an outcome in the middle of the screen, as shown below.<br><br>"
                 + "<b>Winning very much depends on the card you chose - some cards are better than others in their deck.</b><br>"
                 + "Your task is to find out which card is the best in each deck at any time and choose it.<br><br> <b> Please note that the winning chances of the cards are independent</b>.<br> Learning about one card does not tell you anything about the other cards."
                 + "<br> Also, a card's winning chances <b>do not change</b> throughout the game.</p>"
-                + "<br> <img class='example' src='images/reward_example.jpg'>",
+                + "<br> <img class='exampleDeck' src='images/old/1.jpg' >"+"<img class=exampleReward src='images/won1-no-back2.png'>",
                 "<p style='text-align:left'><u>Two important things to remember:</u><br>"
                  + " 1.<b> Only the cards are related to your chances of winning - </b> the location of the card and the response key you used to select it do not influence the chances of winning a coin.<br><br>"
                  + " 2. <b>The chance that each card will give you money has nothing to do with the other cards - </b> you can't learn about one card from the money rewards you got for the other.</p>"],
@@ -149,12 +152,12 @@
             },
             type: "instructions",
             pages: [" <p style='text-align:left'>In the experiment you will play the card game that has been explained above."
-                +"<br>In addition, once every few steps, you will be presented with two brand new shapes. You will need to select one the same way you select cards. It is an opportunity for you to earn more money!"
-                +" <b><br>Below is an example of such two shapes. Notice - each shape will appear exactly once in the game!</b> "
-                +" <br>That means you have another task, and that is to earn as much money as you can in shapes steps.<br>"
+                +"<br>In addition, once every few steps, you will be presented with two brand new shapes. You will need to select one the same way you select cards. <b>It is an opportunity for you to earn more money!</b>"
+                +"<br>Below is an example of such two shapes. Notice - each shape will appear exactly once in the game!</p>"
+                +"<br> <img class='example' src='images/group-shapes.png'>",
+                " <p style='text-align:left'> <br>It means you have another task, and that is to earn as much money as you can in shapes steps.<br>"
                 +" Note that you won't be able to tell what the outcome of your selection was right after selecting a shape. Instead, <b>at the end of the block, you will be informed of the total amount you've earned from shapes steps. </b> "
-                +"<p style='text-align:left'> As in the card game, pressing <b>'S'</b> means you think the left shape is better, and pressing <b>'K'</b> means you think the right shape is better.</p>"
-                +"<br> <img class='example' src='images/group-shapes.png'>"],
+                +"<br>As in the card game, pressing <b>'S'</b> means you think the left shape is better, and pressing <b>'K'</b> means you think the right shape is better.</p>"],
                 show_clickable_nav: true
         }
         var start_instructions_test = {
@@ -226,22 +229,7 @@
         Functions for card game
         ------------------------------------------------------*/
 
-        function get_locations(locations_arr, number_of_images, locations_arr1) {
-            random_locations = [];
-            if (number_of_images == 1) {
-                return jsPsych.randomization.sampleWithoutReplacement(locations_arr1, 1)
-            }
-            for (var i = 0; i < 4; i++) {
-                random_2_locations = jsPsych.randomization.sampleWithoutReplacement(locations_arr.slice(i * 3, i * 3 + 3), 2)
-                random_locations.push(random_2_locations[0])
-                if (number_of_images > 4) {
-                    random_locations.push(random_2_locations[1])
-                }
-            }
-            return random_locations
-        }
-
-        function draw_show_cards(deck, practice) {
+        function draw_show_cards(deck, catch_deck, practice) {
             if (practice==1){ //practice only cards
                 drawn= jsPsych.randomization.sampleWithoutReplacement([0,2],1);
                 if (drawn==0){
@@ -274,8 +262,8 @@
                 right_with_tag = "<img class='card_right' src='" + right_card + "'>"
             }
             else{ // catch trial
-                left_card= catch_trials_images[catch_trials_number]
-                right_card= catch_trials_images[catch_trials_number+1]
+                left_card= catch_deck[catch_trials_number]
+                right_card= catch_deck[catch_trials_number+1]
                 catch_trials_number+=2;
                 if(block>=2){
                     left_with_tag = "<img class='card_left' src='" + left_card + "' style='transform: rotate(180deg);'>"
@@ -433,7 +421,7 @@
                 if(practice_type==2){
                     practice_number+=1;
                 }
-                return draw_show_cards(practice_deck_images, practice_type)
+                return draw_show_cards(practice_deck_images, practice_catch_trials_images, practice_type)
             },
             choices: ['s', 'k'],
             trial_duration: 6000,
@@ -485,6 +473,9 @@
             type: 'html-keyboard-response',
             stimulus: function () {
                 block_type=(block_type+1)%4;
+                if(block==0){
+                    catch_trials_number=0;
+                }
                 return '<p><b><u>Test block ' + (block + 1) + ' out of ' + (blocks) + '</u></b></p>' + '<p style="text-align: left"> You will now start a test block. Below are the four cards that can appear in this round.</p>'
                     + '<p style="text-align: left">Use the LEFT or RIGHT response keys ("S" or "K", in correspondence) to make your selection. <br> Please do your best to win as many coins as possible!<br> </p>'
                     + '<p style="text-align: left">Remember that: <br> 1) Only the cards (not the response key that was used to select them) predict an outcome <br> 2) The chance that each card will give you money has nothing to do with the other cards </p>'
@@ -501,12 +492,13 @@
             type: "html-keyboard-response",
             stimulus: function () {
                 trial_type=trial_order[current_cards_exp_trial]
-                return draw_show_cards(images_for_block_start(), 0)
+                return draw_show_cards(images_for_block_start(), catch_trials_images, 0)
             },
             choices: ['s', 'k'],
             trial_duration: 6000,
             data: { phase: 'exp', trial_name: 'cards1', trial_num: function () { return current_cards_exp_trial },
-                    type_of_trial: function () { return (trial_type==2) } },
+                    type_of_trial: function () { return (trial_type) }, block_type: function () { return block_type}  
+                },
         }
 
         var exp_choice1 = {
@@ -515,7 +507,7 @@
             choices: jsPsych.NO_KEYS,
             trial_duration: 500,
             data: { phase: 'exp', trial_name: 'choice1', trial_num: function () { return current_cards_exp_trial },
-                    type_of_trial: function () { return (trial_type==2) } },
+                    type_of_trial: function () { return trial_type } },
             on_finish: function (data) {
                 data.key_selected = selected
                 if (selected == 0) {
@@ -584,16 +576,17 @@
         ------------------------------------------------------*/
         var demo_procedure_only_cards = {
             timeline: [fixation_cards, practice_cards1, practice_choice1, practice_reward1],
-            repetitions: 3  //every trial takes 500+200+2*(900+1500+500+750)+1500+500 =10 sec per trial, 6 trials = 60 sec
+            repetitions: 1  //every trial takes 500+200+2*(900+1500+500+750)+1500+500 =10 sec per trial, 6 trials = 60 sec
         }
 
         var demo_procedure_cards = {
             timeline: [fixation_cards, practice_cards1, practice_choice1, practice_reward1],
-            repetitions: 3 //every trial takes 500+200+2*(900+1500+500+750)+1500+500 =10 sec per trial, 6 trials = 60 sec
+            repetitions: 1 //every trial takes 500+200+2*(900+1500+500+750)+1500+500 =10 sec per trial, 6 trials = 60 sec
         }
 
         var instructions_loop = {
-            timeline: [instructions_cards, start_practice_only_cards, demo_procedure_only_cards, instructions_combined, start_practice_cards, demo_procedure_cards,start_instructions_test, instructions_test, check_answers],
+            //timeline: [instructions_cards, start_practice_only_cards, demo_procedure_only_cards, instructions_combined, start_practice_cards, demo_procedure_cards,start_instructions_test, instructions_test, check_answers],
+            timeline: [instructions_combined, start_practice_cards, demo_procedure_cards,start_instructions_test, instructions_test, check_answers],
             loop_function: function () {
                 if (to_repeat == true) {
                     return true;
@@ -604,16 +597,16 @@
         }
         var test_procedure_cards = {
             timeline: [fixation_cards, exp_cards1, exp_choice1, exp_reward1],
-            repetitions: 8 // 10sec per trial - 50 trials per block.
+            repetitions: 4 // 10sec per trial - 50 trials per block.
         }
         var test_blocks = {
             timeline: [start_block, test_procedure_cards, finish_block],
-            repetitions: 4
+            repetitions: 2
         };
 
         var full_procedure_cards = {
-            timeline: [instructions_loop, start_exp, test_blocks]
-            //timeline: [start_exp_cards, test_blocks]
+            //timeline: [instructions_loop, start_exp, test_blocks]
+            timeline: [start_exp, test_blocks]
 
 
         } //instructions+test takes 180sec 
@@ -624,7 +617,7 @@
               ------------------------------------------------------*/
         jsPsych.init({
             timeline: timeline,
-            preload_images: practice_deck_images, test_deck_images, reward_images, catch_trials_images,
+            preload_images: practice_deck_images, test_deck_images, reward_images,fixation, surprise,catch_trials_images, practice_catch_trials_images,
             show_preload_progress_bar: true,
             on_finish: function () {
                 // This all part is not used in this experiment (showing participants their bonus and capacity)
