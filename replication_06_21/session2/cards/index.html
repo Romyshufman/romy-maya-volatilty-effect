@@ -104,7 +104,9 @@
         var block_type=Number(jsPsych.randomization.sampleWithoutReplacement([0,1,2,3], 1));
         var trial_type=0;
         //0-A B, 1- C D, 2-catch trial
-        var trial_order=jsPsych.randomization.shuffle([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2])
+        var catch_trials1 = [4, 7, 16, 18, 21, 23, 25, 27, 29, 31, 34, 37, 39, 42, 46, 49]
+        var catch_trials2 = [3, 6, 11, 13, 16, 18, 20, 22, 25, 31, 35, 37, 40, 42, 46, 48]
+        var trial_order = create_trial_order()
         var catch_trials_number = 0;
         var sum_reward_catch_trials=0;
         var sum_reward_test_trials=0;
@@ -228,6 +230,21 @@
         /*---------------------------------------------------- 
         Functions for card game
         ------------------------------------------------------*/
+        function create_trial_order() {
+            chosen_indexes = jsPsych.randomization.sampleWithoutReplacement([1,2], 1)
+            if (chosen_indexes == 1){
+                catch_trial_indexes = catch_trials1
+            }
+            else{
+                catch_trial_indexes = catch_trials2
+            }
+            other_trials = jsPsych.randomization.shuffle([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])
+            for (var i = 0; i < 16; i++){
+                idx = catch_trial_indexes[i]
+                other_trials.splice(idx, 0, 2) //insert catch trial at index idx
+            }
+            return other_trials
+        }
 
         function draw_show_cards(deck, catch_deck, practice) {
             if (practice==1){ //practice only cards
@@ -415,7 +432,7 @@
             trial_duration: 900
         }
 
-        var practice_cards1 = {
+        var practice_cards = {
             type: "html-keyboard-response",
             stimulus: function () {
                 if(practice_type==2){
@@ -425,16 +442,16 @@
             },
             choices: ['s', 'k'],
             trial_duration: 6000,
-            data: { phase: 'practice', trial_name: 'cards1', trial_num: function () { return current_cards_practice_trial } },
+            data: { phase: 'practice', trial_name: 'cards', trial_num: function () { return current_cards_practice_trial } },
 
         }
 
-        var practice_choice1 = {
+        var practice_choice = {
             type: "html-keyboard-response",
             stimulus: show_choice,
             choices: jsPsych.NO_KEYS,
             trial_duration: 500,
-            data: { phase: 'practice', trial_name: 'choice1', trial_num: function () { return current_cards_practice_trial } },
+            data: { phase: 'practice', trial_name: 'choice', trial_num: function () { return current_cards_practice_trial } },
             on_finish: function (data) {
                 data.key_selected = selected
                 if (selected == 0) {
@@ -446,14 +463,14 @@
             }
         }
 
-        var practice_reward1 = {
+        var practice_reward = {
             type: "html-keyboard-response",
             stimulus: function () {
                 return show_reward()
             },
             choices: jsPsych.NO_KEYS,
             trial_duration: 750,
-            data: { phase: 'practice', trial_name: 'reward1', trial_num: function () { return current_cards_practice_trial } }
+            data: { phase: 'practice', trial_name: 'reward', trial_num: function () { return current_cards_practice_trial } }
             , on_finish: function (data) {
                 data.reward = reward;
             }
@@ -488,7 +505,7 @@
             on_finish: function () { document.querySelector('head').insertAdjacentHTML('beforeend', '<style id="cursor-toggle"> html { cursor: none; } </style>') },
         }
 
-        var exp_cards1 = {
+        var exp_cards = {
             type: "html-keyboard-response",
             stimulus: function () {
                 trial_type=trial_order[current_cards_exp_trial]
@@ -496,18 +513,18 @@
             },
             choices: ['s', 'k'],
             trial_duration: 6000,
-            data: { phase: 'exp', trial_name: 'cards1', trial_num: function () { return current_cards_exp_trial },
+            data: { phase: 'exp', trial_name: 'cards', trial_num: function () { return current_cards_exp_trial },
                     type_of_trial: function () { return (trial_type) }, block_type: function () { return block_type}  
                 },
         }
 
-        var exp_choice1 = {
+        var exp_choice = {
             type: "html-keyboard-response",
             stimulus: show_choice,
             choices: jsPsych.NO_KEYS,
             trial_duration: 500,
-            data: { phase: 'exp', trial_name: 'choice1', trial_num: function () { return current_cards_exp_trial },
-                    type_of_trial: function () { return trial_type } },
+            data: { phase: 'exp', trial_name: 'choice', trial_num: function () { return current_cards_exp_trial },
+                    type_of_trial: function () { return trial_type }, block_type: function () { return block_type} },
             on_finish: function (data) {
                 data.key_selected = selected
                 if (selected == 0) {
@@ -518,7 +535,7 @@
                 }
             }
         }
-        var exp_reward1 = {
+        var exp_reward = {
             type: "html-keyboard-response",
             stimulus: function () {
                 return show_reward()
@@ -526,8 +543,9 @@
             choices: jsPsych.NO_KEYS,
             trial_duration: 750,
             data: {
-                phase: 'exp', trial_name: 'reward1', trial_num: function () { return current_cards_exp_trial },
-                type_of_trial: function () { return trial_type }, block: function () { return block } },
+                phase: 'exp', trial_name: 'reward', trial_num: function () { return current_cards_exp_trial },
+                type_of_trial: function () { return trial_type }, block_type: function () { return block_type},
+                block: function () { return block } },
 
             on_finish: function (data) {
                 current_cards_exp_trial+=1;
@@ -565,7 +583,7 @@
                 }
                 block += 1;
                 current_cards_exp_trial = 0;
-                trial_order=jsPsych.randomization.shuffle(trial_order);
+                trial_order = create_trial_order()
                 sum_reward_catch_trials=0;
                 sum_reward_test_trials=0;
             }
@@ -575,18 +593,18 @@
         Define timeline for card part
         ------------------------------------------------------*/
         var demo_procedure_only_cards = {
-            timeline: [fixation_cards, practice_cards1, practice_choice1, practice_reward1],
+            timeline: [fixation_cards, practice_cards, practice_choice, practice_reward],
             repetitions: 1  //every trial takes 500+200+2*(900+1500+500+750)+1500+500 =10 sec per trial, 6 trials = 60 sec
         }
 
         var demo_procedure_cards = {
-            timeline: [fixation_cards, practice_cards1, practice_choice1, practice_reward1],
+            timeline: [fixation_cards, practice_cards, practice_choice, practice_reward],
             repetitions: 1 //every trial takes 500+200+2*(900+1500+500+750)+1500+500 =10 sec per trial, 6 trials = 60 sec
         }
 
         var instructions_loop = {
-            //timeline: [instructions_cards, start_practice_only_cards, demo_procedure_only_cards, instructions_combined, start_practice_cards, demo_procedure_cards,start_instructions_test, instructions_test, check_answers],
-            timeline: [instructions_combined, start_practice_cards, demo_procedure_cards,start_instructions_test, instructions_test, check_answers],
+            timeline: [instructions_cards, start_practice_only_cards, demo_procedure_only_cards, instructions_combined, start_practice_cards, demo_procedure_cards,start_instructions_test, instructions_test, check_answers],
+            //timeline: [instructions_combined, start_practice_cards, demo_procedure_cards,start_instructions_test, instructions_test, check_answers],
             loop_function: function () {
                 if (to_repeat == true) {
                     return true;
@@ -596,12 +614,12 @@
             }
         }
         var test_procedure_cards = {
-            timeline: [fixation_cards, exp_cards1, exp_choice1, exp_reward1],
-            repetitions: 4 // 10sec per trial - 50 trials per block.
+            timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
+            repetitions: 4 // 8.15sec per trial - 50 trials per block. total = 6.8 minutes per block.
         }
         var test_blocks = {
             timeline: [start_block, test_procedure_cards, finish_block],
-            repetitions: 2
+            repetitions: 4
         };
 
         var full_procedure_cards = {
@@ -621,16 +639,9 @@
             show_preload_progress_bar: true,
             on_finish: function () {
                 // This all part is not used in this experiment (showing participants their bonus and capacity)
-                /*calculate accuracy in squares part of cards game */
-                var correct_test_squares = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'test_cards' }).select('is_correct').sum()
-                var total_test_squares = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'test_cards' }).select('is_correct').count()
-                var test_squares_cards_accuracy = correct_test_squares / total_test_squares;
-                var test_squares_cards_accuracy = test_squares_cards_accuracy.toFixed(2)
-                localStorage.accuracy = test_squares_cards_accuracy; //accuracy to show
                 /*calculate bonus */
-                var number_of_reward1 = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'reward1' }).select('reward').sum()
-                var number_of_reward2 = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'reward2' }).select('reward').sum()
-                var bonus = 0.003 * (number_of_reward1 + number_of_reward2)
+                var number_of_reward = jsPsych.data.get().filter({ phase: 'exp', trial_name: 'reward' }).select('reward').sum()
+                var bonus = 0.007 * (number_of_reward)
                 var bonus_string = bonus.toFixed(2)
                 localStorage.bonus = bonus_string; //bonus to show
                 /*get data */
