@@ -86,7 +86,7 @@
             , 'images/old/9.jpg', 'images/old/10.jpg', 'images/old/11.jpg', 'images/old/12.jpg', 'images/old/13.jpg', 'images/old/14.jpg', 'images/old/15.jpg', 'images/old/16.jpg' ]
         var reward_images = ['images/zero_coins.png', 'images/won1-no-back1.png']
         var fixation = '<div class="fixation">+</div>'
-        var surprise= 'images/surprise.jpeg'
+        var surprise= 'images/surprise.jpg'
         var catch_trials_images = jsPsych.randomization.shuffle(['images/catch_trial/1.jpg', 'images/catch_trial/2.jpg', 'images/catch_trial/3.jpg', 'images/catch_trial/4.jpg', 'images/catch_trial/5.jpg', 'images/catch_trial/6.jpg', 'images/catch_trial/7.jpg', 'images/catch_trial/8.jpg',
                                     'images/catch_trial/9.jpg', 'images/catch_trial/10.jpg', 'images/catch_trial/11.jpg', 'images/catch_trial/12.jpg', 'images/catch_trial/13.jpg', 'images/catch_trial/14.jpg', 'images/catch_trial/15.jpg', 'images/catch_trial/16.jpg',
                                     'images/catch_trial/17.jpg', 'images/catch_trial/18.jpg', 'images/catch_trial/19.jpg', 'images/catch_trial/20.jpg', 'images/catch_trial/21.jpg', 'images/catch_trial/22.jpg', 'images/catch_trial/23.jpg', 'images/catch_trial/24.jpg',
@@ -95,8 +95,20 @@
                                     'images/catch_trial/41.jpg', 'images/catch_trial/42.jpg', 'images/catch_trial/43.jpg', 'images/catch_trial/44.jpg', 'images/catch_trial/45.jpg', 'images/catch_trial/46.jpg', 'images/catch_trial/47.jpg', 'images/catch_trial/48.jpg',
                                     'images/catch_trial/49.jpg', 'images/catch_trial/50.jpg', 'images/catch_trial/51.jpg', 'images/catch_trial/52.jpg', 'images/catch_trial/53.jpg', 'images/catch_trial/54.jpg', 'images/catch_trial/55.jpg', 'images/catch_trial/56.jpg',
                                     'images/catch_trial/57.jpg', 'images/catch_trial/58.jpg', 'images/catch_trial/59.jpg', 'images/catch_trial/60.jpg', 'images/catch_trial/61.jpg', 'images/catch_trial/62.jpg', 'images/catch_trial/63.jpg', 'images/catch_trial/64.jpg'])
+        // var catch_trials_images =['images/catch_trial/1.jpg', 'images/catch_trial/2.jpg', 'images/catch_trial/3.jpg', 'images/catch_trial/4.jpg', 'images/catch_trial/5.jpg', 'images/catch_trial/6.jpg', 'images/catch_trial/7.jpg', 'images/catch_trial/8.jpg',
+        //                              'images/catch_trial/9.jpg', 'images/catch_trial/10.jpg', 'images/catch_trial/11.jpg', 'images/catch_trial/12.jpg', 'images/catch_trial/13.jpg', 'images/catch_trial/14.jpg', 'images/catch_trial/15.jpg', 'images/catch_trial/16.jpg',
+        //                              'images/catch_trial/17.jpg', 'images/catch_trial/18.jpg', 'images/catch_trial/19.jpg', 'images/catch_trial/20.jpg', 'images/catch_trial/21.jpg', 'images/catch_trial/22.jpg', 'images/catch_trial/23.jpg', 'images/catch_trial/24.jpg',
+        //                              'images/catch_trial/25.jpg', 'images/catch_trial/26.jpg', 'images/catch_trial/27.jpg', 'images/catch_trial/28.jpg', 'images/catch_trial/29.jpg', 'images/catch_trial/30.jpg', 'images/catch_trial/31.jpg', 'images/catch_trial/32.jpg',
+        //                              'images/catch_trial/33.jpg', 'images/catch_trial/34.jpg', 'images/catch_trial/35.jpg', 'images/catch_trial/36.jpg', 'images/catch_trial/37.jpg', 'images/catch_trial/38.jpg', 'images/catch_trial/39.jpg', 'images/catch_trial/40.jpg',
+        //                              'images/catch_trial/41.jpg', 'images/catch_trial/42.jpg', 'images/catch_trial/43.jpg', 'images/catch_trial/44.jpg', 'images/catch_trial/45.jpg', 'images/catch_trial/46.jpg', 'images/catch_trial/47.jpg', 'images/catch_trial/48.jpg',
+        //                              'images/catch_trial/49.jpg', 'images/catch_trial/50.jpg', 'images/catch_trial/51.jpg', 'images/catch_trial/52.jpg', 'images/catch_trial/53.jpg', 'images/catch_trial/54.jpg', 'images/catch_trial/55.jpg', 'images/catch_trial/56.jpg',
+        //                              'images/catch_trial/57.jpg', 'images/catch_trial/58.jpg', 'images/catch_trial/59.jpg', 'images/catch_trial/60.jpg', 'images/catch_trial/61.jpg', 'images/catch_trial/62.jpg', 'images/catch_trial/63.jpg', 'images/catch_trial/64.jpg']
+
         var practice_catch_trials_images= jsPsych.randomization.shuffle(['images/practice_catch_trials/1.png','images/practice_catch_trials/2.png','images/practice_catch_trials/3.png','images/practice_catch_trials/4.png'])
 
+
+
+        
 
         /*----------------------------------------------------
         Define game-related settings
@@ -110,7 +122,7 @@
         var catch_trials_number = 0;
         var sum_reward_catch_trials=0;
         var sum_reward_test_trials=0;
-        var practice_order=jsPsych.randomization.shuffle([0,0,1,1,2,2])
+        var practice_order=[0,2,1,1,2,0]
         var practice_number=-1;
         var practice_type;
         /*---------------------------------------------------- 
@@ -614,16 +626,16 @@
         }
         var test_procedure_cards = {
             timeline: [fixation_cards, exp_cards, exp_choice, exp_reward],
-            repetitions: 4 // 8.15sec per trial - 50 trials per block. total = 6.8 minutes per block.
+            repetitions: 50 // 8.15sec per trial - 50 trials per block. total = 6.8 minutes per block.
         }
         var test_blocks = {
             timeline: [start_block, test_procedure_cards, finish_block],
             repetitions: 4
-        };
+        }
 
         var full_procedure_cards = {
-            timeline: [instructions_loop, start_exp, test_blocks]
-            //timeline: [start_exp, test_blocks]
+            //timeline: [instructions_loop, start_exp, test_blocks]
+            timeline: [start_exp, test_blocks]
 
 
         }
