@@ -594,17 +594,16 @@
         ------------------------------------------------------*/
         var demo_procedure_only_cards = {
             timeline: [fixation_cards, practice_cards, practice_choice, practice_reward],
-            repetitions: 1  //every trial takes 500+200+2*(900+1500+500+750)+1500+500 =10 sec per trial, 6 trials = 60 sec
+            repetitions: 6  //every trial takes 8.15 sec, 6 trials = 49 sec
         }
 
         var demo_procedure_cards = {
             timeline: [fixation_cards, practice_cards, practice_choice, practice_reward],
-            repetitions: 1 //every trial takes 500+200+2*(900+1500+500+750)+1500+500 =10 sec per trial, 6 trials = 60 sec
+            repetitions: 6 //every trial takes 8.15 sec, 6 trials = 49 sec
         }
 
         var instructions_loop = {
             timeline: [instructions_cards, start_practice_only_cards, demo_procedure_only_cards, instructions_combined, start_practice_cards, demo_procedure_cards,start_instructions_test, instructions_test, check_answers],
-            //timeline: [instructions_combined, start_practice_cards, demo_procedure_cards,start_instructions_test, instructions_test, check_answers],
             loop_function: function () {
                 if (to_repeat == true) {
                     return true;
@@ -623,11 +622,11 @@
         };
 
         var full_procedure_cards = {
-            //timeline: [instructions_loop, start_exp, test_blocks]
-            timeline: [start_exp, test_blocks]
+            timeline: [instructions_loop, start_exp, test_blocks]
+            //timeline: [start_exp, test_blocks]
 
 
-        } //instructions+test takes 180sec 
+        }
         timeline.push(full_procedure_cards)
 
         /*---------------------------------------------------- 
