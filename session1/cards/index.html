@@ -61,8 +61,8 @@
         root.style.setProperty('--lower3', window.screen.height / 2 - vis_angle_px + "px");
 
         //---------------------------------------------------------------------------------------------
-        root.style.setProperty('--left_card', window.screen.width / 2 - 2 * vis_angle_px + "px");
-        root.style.setProperty('--right_card', window.screen.width / 2 - 2 * vis_angle_px + "px");
+        root.style.setProperty('--left_card', window.screen.width / 2 - 2.3 * vis_angle_px + "px");
+        root.style.setProperty('--right_card', window.screen.width / 2 - 2.3 * vis_angle_px + "px");
         root.style.setProperty('--top_card', window.screen.height / 2 - 90 + "px");
         root.style.setProperty('--top_reward', window.screen.height / 2 + "px");
         root.style.setProperty('--left_reward', window.screen.width / 2 + "px");
@@ -163,10 +163,11 @@
                 +"<br>In addition, once every few steps, you will be presented with <b>two brand new shapes</b> as in the example below.</p>"
                 +"<br> <img class='example' src='images/group-shapes.png'><br>"
                 +"<p>Notice - each shape will appear exactly once in the game!</p>",
-                "<p><br>You will need to select one the same way you select cards."
-                +"<br>However, you will not see whether you won a coin or not."
+                "<p><br>You will need to select one of them."
+                +"<br><br><b>The chance that each shape will give a coin is determined by lottery behind the scenes</b></p>",
+                "<p><br>In these steps you will not see whether you won a coin or not."
                 +"<br>Instead, at the end of the block, you will be informed of the total amount you've earned from shapes steps."
-                +"<br><b>It is an opportunity for you to earn more money!</b></p>",
+                +"<br><br><b>It is an opportunity for you to earn more money!</b></p>",
                 "<p>As in the card game, in order the choose the left shape press <b>'S'</b> and in order the choose the right shape press <b>'K'</b>.</p>"],
                 show_clickable_nav: true
         }
@@ -198,7 +199,7 @@
                 { prompt: "How 'good' or 'bad' a card is will change along the game.", name: 'value_change', correct: 'False', options: Q4_5_options, required: true },
                 { prompt: "If one card frequantly leads to a coin, it means the other card will probably lead to a coin only occasionally", name: 'value_independence', correct: 'False', options: Q6_options, required: true },
                 { prompt: "If you use the RIGHT and not the LEFT response key, you might win more", name: 'location_value', correct: "False - you won't win more or less using RIGHT or LEFT response keys. Only the cards are related to your chance of winning.", options: Q7_options, required: true },
-                { prompt: "When do you know how many coins you got from steps in which you are choosing a shape?", name: 'reward_announce', correct: "At the end of the block.", options: Q8_options, required: true },
+                { prompt: "When will you know how many coins you earned from the shape lottery steps?", name: 'reward_announce', correct: "At the end of the block.", options: Q8_options, required: true },
                 { prompt: "The same shape can be presented multiple times throughout the game.", name: 'shapes_repeated', correct: 'False', options: Q9_options, required: true },
 
             ],
@@ -689,8 +690,8 @@
         }
 
         var instructions_loop = {
-            //timeline: [instructions_cards, start_practice_only_cards, demo_procedure_only_cards, instructions_combined, start_practice_cards, demo_procedure_cards,start_instructions_test, instructions_test, check_answers],
-            timeline: [instructions_combined, start_practice_cards, demo_procedure_cards,start_instructions_test, instructions_test, check_answers],
+            timeline: [instructions_cards, start_practice_only_cards, demo_procedure_only_cards, instructions_combined, start_practice_cards, demo_procedure_cards,start_instructions_test, instructions_test, check_answers],
+            //timeline: [instructions_combined, start_practice_cards, demo_procedure_cards,start_instructions_test, instructions_test, check_answers],
             loop_function: function () {
                 if (to_repeat == true) {
                     return true;
@@ -709,8 +710,8 @@
         }
 
         var full_procedure_cards = {
-            //timeline: [instructions_loop, start_exp, test_blocks,finish_learning]
-            timeline: [start_exp, test_blocks,finish_learning]
+            timeline: [instructions_loop, start_exp, test_blocks,finish_learning]
+            //timeline: [start_exp, test_blocks,finish_learning]
 
 
         }
